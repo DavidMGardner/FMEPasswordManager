@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FME.PasswordManager
 {
-    public class EntityJsonStorage<T> : IEntityStorage<T> where T : IEntity
+    public class JsonRepository<T> : IRepository<T> where T : IEntity
     {
         private readonly IEntityPersistence<T> _persistence;
         private readonly IPasswordManagement _passwordManagement;
@@ -17,7 +17,7 @@ namespace FME.PasswordManager
             set { _persistence.Configuration.MasterKey = value; } 
         }
 
-        public EntityJsonStorage(IConfiguration configuration, IEntityPersistence<T> persistence, IPasswordManagement passwordManagement)
+        public JsonRepository(IEntityPersistence<T> persistence, IPasswordManagement passwordManagement)
         {
             _persistence = persistence;
             _passwordManagement = passwordManagement;

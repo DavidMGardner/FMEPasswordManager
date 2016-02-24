@@ -28,7 +28,14 @@ namespace FME.PasswordManager
             if (Configuration == null)
                 throw new EncryptionConfigurationException("Invalid configuration set in TripleDESEncryptionStrategy");
 
-            return CipherUtility.Decrypt<TripleDESCryptoServiceProvider>(text, Configuration.MasterKey, Configuration.EncryptionSalt);
+            try
+            {
+                return CipherUtility.Decrypt<TripleDESCryptoServiceProvider>(text, Configuration.MasterKey, Configuration.EncryptionSalt);
+            }
+            catch (System.Security.Cryptography.CryptographicException cryptographicException)
+            {
+                throw new EncryptionStrategyException(cryptographicException.Message);
+            }
         }
 
         public IConfiguration Configuration { get; set; }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,6 +39,8 @@ namespace FME.PasswordManager.Tests
                     scan.WithDefaultConventions();
                 });
                 x.For<IEntityPersistence<PasswordEntity>>().Use<JsonFilePersistence<PasswordEntity>>();
+                x.For<IRepository<PasswordEntity>>().Use<JsonRepository<PasswordEntity>>();
+                
                 x.For<IConfiguration>().Use<Configuration>();
                 x.For<IEncryptionStrategy>().Use<TripleDESEncryptionStrategy>();
                 x.For<ILogger>().Use(log);
@@ -64,6 +68,32 @@ namespace FME.PasswordManager.Tests
 
             // assert
             success.ShouldBeTrue();
+        }
+
+        [Test]
+        public void IntegrationTest_SaveEntityStorageShouldSucceed()
+        {
+            // arrange
+            ConfigurationManager.AppSettings["FileName"] = "TestFile.Json";
+            File.Delete(_container.GetInstance<IConfiguration>().GetFullPath());
+
+            var storage = _container.GetInstance<IRepository<PasswordEntity>>();
+            storage.MasterKey = Guid.NewGuid().ToString();
+            
+            // act
+            var insertedItem = storage.Insert(new PasswordEntity
+            {
+                CommonName = "Amazon",
+                Url = "www.amazon.com",
+                UserName = "dave@sample.com",
+                Password = "pass@word1"
+            });
+
+            var retrievedEntity = storage.GetById(insertedItem.Id);
+
+            // assert
+            insertedItem.Id.ShouldNotBeNullOrWhiteSpace();
+            retrievedEntity.Id.ShouldBe(insertedItem.Id);
         }
     }
     

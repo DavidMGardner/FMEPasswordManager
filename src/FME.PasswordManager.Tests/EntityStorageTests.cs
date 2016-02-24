@@ -36,7 +36,7 @@ namespace FME.PasswordManager.Tests
                 x.For<IEntityPersistence<PasswordEntity>>().Use<EntityMemoryPersistence<PasswordEntity>>();
                 x.For<IPasswordManagement>().Use<PasswordManagement>();
                 x.For<ILogger>().Use(log);
-                x.For<IEntityStorage<PasswordEntity>>().Use<EntityJsonStorage<PasswordEntity>>();
+                x.For<IRepository<PasswordEntity>>().Use<JsonRepository<PasswordEntity>>();
             });
         }
 
@@ -44,7 +44,7 @@ namespace FME.PasswordManager.Tests
         public void SaveSingleEntityShouldAddOnlyOneRecordAndReturnAnEntityWithId()
         {
             // arrange
-            var jsonPersistence = _container.GetInstance<IEntityStorage<PasswordEntity>>();
+            var jsonPersistence = _container.GetInstance<IRepository<PasswordEntity>>();
 
             var listOfPasswordEntity = new PasswordEntity
             {
@@ -66,7 +66,7 @@ namespace FME.PasswordManager.Tests
         public void SaveSingleEntityShouldAddOnlyOneRecord()
         {
             // arrange
-            var jsonPersistence = _container.GetInstance<IEntityStorage<PasswordEntity>>();
+            var jsonPersistence = _container.GetInstance<IRepository<PasswordEntity>>();
 
             var listOfPasswordEntity = new PasswordEntity
             {
@@ -89,7 +89,7 @@ namespace FME.PasswordManager.Tests
         public void DeleteSingleEntityWithNoRecordsShouldNotFail()
         {
             // arrange
-            var jsonPersistence = _container.GetInstance<IEntityStorage<PasswordEntity>>();
+            var jsonPersistence = _container.GetInstance<IRepository<PasswordEntity>>();
 
             var listOfPasswordEntity = new PasswordEntity
             {
@@ -110,7 +110,7 @@ namespace FME.PasswordManager.Tests
         public void DeleteSingleEntityWithIdShouldRemoveThatEntity()
         {
             // arrange
-            var jsonPersistence = _container.GetInstance<IEntityStorage<PasswordEntity>>();
+            var jsonPersistence = _container.GetInstance<IRepository<PasswordEntity>>();
 
             var listOfPasswordEntity = new PasswordEntity
             {

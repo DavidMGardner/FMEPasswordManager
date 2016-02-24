@@ -4,16 +4,14 @@ using System.Linq.Expressions;
 
 namespace FME.PasswordManager
 {
-    public interface IRepository<T> where T : IEntity
+    public interface IRepository<T> where T : IEntity 
     {
-        void Insert(T agregateRoot);
-
         void Delete(T agregateRoot);
-
         IQueryable<T> GetAll();
-
+        T GetById(string id);
+        T Insert(T agregateRoot);
         IQueryable<T> SearchFor(Expression<Func<T, bool>> predicate);
 
-        T GetById(Guid id);
+        string MasterKey { set; }
     }
 }

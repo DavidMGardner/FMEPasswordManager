@@ -31,13 +31,7 @@ namespace FME.PasswordManager
             _configuration = configuration;
         }
 
-        private string GetFullPath()
-        {
-            if (string.IsNullOrWhiteSpace(_configuration.StorageLocation) || string.IsNullOrWhiteSpace(_configuration.FileName))
-                throw new Exception("Path appsettings are missing");                
-
-            return $"{_configuration.StorageLocation}\\{_configuration.FileName}";
-        }
+     
 
         private static void EnsureFolder(string path)
         {
@@ -53,15 +47,22 @@ namespace FME.PasswordManager
             try
             {
                 EnsureFolder(_configuration.StorageLocation);
-                using (StreamReader file = File.OpenText(GetFullPath()))
+
+                if (File.Exists(_configuration.GetFullPath()) == false)
                 {
-                    return JsonConvert.DeserializeObject<List<T>>(file.ReadToEnd());
+                    return new List<T>();
+                }
+
+                using (StreamReader file = File.OpenText(_configuration.GetFullPath()))
+                {
+                    string encryptedFile = file.ReadToEnd();
+                    return JsonConvert.DeserializeObject<List<T>>(_encryptionStrategy.Decrypt(encryptedFile));
                 }
             }
-            catch (Exception ex)
+            catch (Newtonsoft.Json.JsonReaderException ex)
             {
                 _logger.Error(ex.Message);
-                return null;
+                throw new EncryptedDeserializationException(ex.Message);
             }
         } 
 
@@ -70,7 +71,7 @@ namespace FME.PasswordManager
             try
             {
                 EnsureFolder(_configuration.StorageLocation);
-                using (FileStream fs = File.Open(GetFullPath(), FileMode.OpenOrCreate))
+                using (FileStream fs = File.Open(_configuration.GetFullPath(), FileMode.OpenOrCreate))
                 { 
                     string json = JsonConvert.SerializeObject(o);
                     string encrypted = _encryptionStrategy.Encrypt(json);
@@ -105,5 +106,11 @@ namespace FME.PasswordManager
         {
             return DeserializeObject();
         }
+    }
+
+    internal class EncryptedDeserializationException : Exception
+    {
+        public EncryptedDeserializationException(string message) : 
+            base($"Error trying to deserialize repository, did you forget the correct master key or salt? --> Inner Exception: {message}") {}
     }
 }

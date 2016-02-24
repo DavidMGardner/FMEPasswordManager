@@ -18,7 +18,15 @@ namespace FME.PasswordManager
             set { ConfigurationManager.AppSettings["EncryptionSalt"] = value; }
         }
         public string MasterKey { get; set; }
-        
+
+        public string GetFullPath()
+        {
+            if (string.IsNullOrWhiteSpace(StorageLocation) || string.IsNullOrWhiteSpace(FileName))
+                throw new Exception("Path appsettings are missing");
+
+            return $"{StorageLocation}\\{FileName}";
+        }
+
     }
 
     public interface IConfiguration
@@ -27,5 +35,6 @@ namespace FME.PasswordManager
         string FileName { get; }
         string MasterKey { get; set; }
         string EncryptionSalt { get; set; }
+        string GetFullPath();
     }
 }

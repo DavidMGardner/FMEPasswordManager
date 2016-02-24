@@ -75,6 +75,40 @@ namespace FME.PasswordManager.Tests
         }
 
         [Test]
+        public void EncryptionShouldThrowExceptionWhenUsingMistachedSalts()
+        {
+            // arrange
+            var encryptor = _container.GetInstance<IEncryptionStrategy>();
+
+            string messageToEncrypt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis eros viverra, lacinia nisi ac, bibendum erat. Sed dolor quam.";
+            encryptor.Configuration.MasterKey = Guid.NewGuid().ToString();
+
+            // act
+            string encryptedMessage = encryptor.Encrypt(messageToEncrypt);
+            encryptor.Configuration.EncryptionSalt = "Bad Salt";
+
+            // assert
+            Should.Throw<EncryptionStrategyException>(() => encryptor.Decrypt(encryptedMessage));
+        }
+
+        [Test]
+        public void EncryptionShouldThrowExceptionWhenUsingMistachedMasterKeys()
+        {
+            // arrange
+            var encryptor = _container.GetInstance<IEncryptionStrategy>();
+
+            string messageToEncrypt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis eros viverra, lacinia nisi ac, bibendum erat. Sed dolor quam.";
+            encryptor.Configuration.MasterKey = "Good Key";
+
+            // act
+            string encryptedMessage = encryptor.Encrypt(messageToEncrypt);
+            encryptor.Configuration.MasterKey = "Bad Key";
+            
+            // assert
+            Should.Throw<EncryptionStrategyException>(()=> encryptor.Decrypt(encryptedMessage));
+        }
+
+        [Test]
         public void AesShouldEncriptAndDecriptSameString()
         {
             // arrange
