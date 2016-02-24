@@ -6,6 +6,7 @@ namespace FME.PasswordManager
     public class EntityMemoryPersistence<T> : IEntityPersistence<T>
     {
         private readonly List<T> _records = new List<T>();
+        public IConfiguration Configuration { get; set; }
 
         public bool PutList(List<T> entities)
         {
@@ -32,7 +33,5 @@ namespace FME.PasswordManager
 
             return _records.ToList();
         }
-
-        public IEncryptionStrategy EncryptionStrategy { get; set; }
     } 
 }

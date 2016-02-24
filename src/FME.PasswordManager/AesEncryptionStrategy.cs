@@ -4,6 +4,11 @@ namespace FME.PasswordManager
 {
     public class AesEncryptionStrategy : IEncryptionStrategy
     {
+        public AesEncryptionStrategy(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public string Encrypt(string value)
         {
             if (Configuration == null)

@@ -56,15 +56,13 @@ namespace FME.PasswordManager.Tests
             // arrange
             var logger = _container.GetInstance<ILogger>();
             var encryptor = _container.GetInstance<IEncryptionStrategy>();
-            var config = _container.GetInstance<IConfiguration>();
 
             string messageToEncrypt =
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis eros viverra, lacinia nisi ac, bibendum erat. Sed dolor quam.";
 
-            config.MasterKey = Guid.NewGuid().ToString();
+            encryptor.Configuration.MasterKey = Guid.NewGuid().ToString();
 
             // act
-            encryptor.Configuration = config;
             string encryptedMessage = encryptor.Encrypt(messageToEncrypt);
             logger.Information(encryptedMessage);
 

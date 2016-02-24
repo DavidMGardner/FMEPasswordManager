@@ -14,15 +14,13 @@ namespace FME.PasswordManager
 
         public string MasterKey
         {
-            set { _persistence.EncryptionStrategy.Configuration.MasterKey = value; } 
+            set { _persistence.Configuration.MasterKey = value; } 
         }
 
-        public EntityJsonStorage(IConfiguration configuration, IEntityPersistence<T> persistence, IPasswordManagement passwordManagement, IEncryptionStrategy encryptionStrategy)
+        public EntityJsonStorage(IConfiguration configuration, IEntityPersistence<T> persistence, IPasswordManagement passwordManagement)
         {
             _persistence = persistence;
             _passwordManagement = passwordManagement;
-            _persistence.EncryptionStrategy = encryptionStrategy;
-            _persistence.EncryptionStrategy.Configuration = configuration;
         }
 
         public void Delete(T agregateRoot)

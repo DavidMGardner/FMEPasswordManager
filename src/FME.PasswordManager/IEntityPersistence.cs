@@ -8,6 +8,6 @@ namespace FME.PasswordManager
         bool AddRange(List<T> entities);
         List<T> GetList();
 
-        IEncryptionStrategy EncryptionStrategy { get; set; }
+        IConfiguration Configuration { get; set; }
     }
 }

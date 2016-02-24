@@ -9,13 +9,26 @@ namespace FME.PasswordManager
 {
     public class JsonFilePersistence<T> : IEntityPersistence<T>
     {
-        private readonly IConfiguration _configuration;
+        private IConfiguration _configuration;
         private readonly ILogger _logger;
+        private readonly IEncryptionStrategy _encryptionStrategy;
 
-        public JsonFilePersistence(IConfiguration configuration, ILogger logger)
+        public string MasterKey
         {
-            _configuration = configuration;
+            set { _encryptionStrategy.Configuration.MasterKey = value; }
+        }
+
+        public IConfiguration Configuration
+        {
+            get { return _configuration; }
+            set { _configuration = value; }
+        }
+
+        public JsonFilePersistence(IConfiguration configuration, ILogger logger, IEncryptionStrategy encryptionStrategy)
+        {
             _logger = logger;
+            _encryptionStrategy = encryptionStrategy;
+            _configuration = configuration;
         }
 
         private string GetFullPath()
@@ -60,7 +73,7 @@ namespace FME.PasswordManager
                 using (FileStream fs = File.Open(GetFullPath(), FileMode.OpenOrCreate))
                 { 
                     string json = JsonConvert.SerializeObject(o);
-                    string encrypted = EncryptionStrategy.Encrypt(json);
+                    string encrypted = _encryptionStrategy.Encrypt(json);
 
                     byte[] info = new UTF8Encoding(true).GetBytes(encrypted);
                     fs.Write(info, 0, info.Length);
@@ -92,7 +105,5 @@ namespace FME.PasswordManager
         {
             return DeserializeObject();
         }
-
-        public IEncryptionStrategy EncryptionStrategy { get; set; }
     }
 }

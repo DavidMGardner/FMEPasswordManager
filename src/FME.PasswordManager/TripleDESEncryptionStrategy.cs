@@ -10,7 +10,12 @@ namespace FME.PasswordManager
 {
     public class TripleDESEncryptionStrategy : IEncryptionStrategy
     {
-       public string Encrypt(string value)
+        public TripleDESEncryptionStrategy(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public string Encrypt(string value)
         {
             if(Configuration == null)
                 throw new EncryptionConfigurationException("Invalid configuration set in TripleDESEncryptionStrategy");

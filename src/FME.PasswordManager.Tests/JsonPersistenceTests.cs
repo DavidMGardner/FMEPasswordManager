@@ -48,10 +48,7 @@ namespace FME.PasswordManager.Tests
         {
             // arrange
             var storage = _container.GetInstance<IEntityPersistence<PasswordEntity>>();
-            storage.EncryptionStrategy = _container.GetInstance<IEncryptionStrategy>();
-
-            storage.EncryptionStrategy.Configuration = _container.GetInstance<IConfiguration>();
-            storage.EncryptionStrategy.Configuration.MasterKey = Guid.NewGuid().ToString();
+            storage.Configuration.MasterKey = Guid.NewGuid().ToString();
 
             // act
             bool success = storage.PutList(new List<PasswordEntity>
