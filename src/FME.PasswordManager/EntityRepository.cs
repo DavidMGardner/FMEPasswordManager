@@ -5,10 +5,11 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using FME.PasswordManager.Interfaces;
+using Moo.Extenders;
 
 namespace FME.PasswordManager
 {
-    public class JsonRepository<T> : IRepository<T> where T : IEntity
+    public class EntityRepository<T> : IRepository<T> where T : IEntity
     {
         private readonly IEntityPersistence<T> _persistence;
         private readonly IPasswordManagement _passwordManagement;
@@ -18,7 +19,7 @@ namespace FME.PasswordManager
             set { _persistence.Configuration.MasterKey = value; } 
         }
 
-        public JsonRepository(IEntityPersistence<T> persistence, IPasswordManagement passwordManagement)
+        public EntityRepository(IEntityPersistence<T> persistence, IPasswordManagement passwordManagement)
         {
             _persistence = persistence;
             _passwordManagement = passwordManagement;
@@ -39,7 +40,7 @@ namespace FME.PasswordManager
         public T GetById(string id)
         {
             var records = _persistence.GetList();
-            return records.First(w => w.Id == id.ToString());
+            return records.First(w => w.Id == id.ToString()).MapTo<T>();
         }
 
         public T Insert(T agregateRoot)
@@ -50,7 +51,22 @@ namespace FME.PasswordManager
             records.Add(agregateRoot);
 
             if(_persistence.PutList(records))
-                return agregateRoot;
+                return agregateRoot.MapTo<T>();
+
+            return default(T);
+        }
+
+        public T Update(T agregateRoot)
+        {
+            var records = _persistence.GetList();
+
+            if(records.Count == 0)
+                throw new Exception("Trying to update a record with an empty repository");
+
+            var record = agregateRoot.MapTo(records.First(w => w.Id == agregateRoot.Id));
+
+            if (_persistence.PutList(records))
+                return record.MapTo<T>();
 
             return default(T);
         }

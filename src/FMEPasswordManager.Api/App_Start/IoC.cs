@@ -40,7 +40,7 @@ namespace FMEPasswordManager.Api.App_Start
                     scan.WithDefaultConventions();
                 });
                 x.For<IEntityPersistence<PasswordEntity>>().Use<JsonFilePersistence<PasswordEntity>>();
-                x.For<IRepository<PasswordEntity>>().Use<JsonRepository<PasswordEntity>>();
+                x.For<IRepository<PasswordEntity>>().Use<EntityRepository<PasswordEntity>>();
                 x.For<IConfiguration>().Use<Configuration>();
                 x.For<IEncryptionStrategy>().Use<TripleDESEncryptionStrategy>();
                 x.For<IPasswordManagement>().Use<PasswordManagement>();

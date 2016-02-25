@@ -42,7 +42,7 @@ namespace FME.PasswordManager.Tests
                     scan.WithDefaultConventions();
                 });
                 x.For<IEntityPersistence<PasswordEntity>>().Use<JsonFilePersistence<PasswordEntity>>();
-                x.For<IRepository<PasswordEntity>>().Use<JsonRepository<PasswordEntity>>();
+                x.For<IRepository<PasswordEntity>>().Use<EntityRepository<PasswordEntity>>();
                 
                 x.For<IConfiguration>().Use<Configuration>();
                 x.For<IEncryptionStrategy>().Use<TripleDESEncryptionStrategy>();

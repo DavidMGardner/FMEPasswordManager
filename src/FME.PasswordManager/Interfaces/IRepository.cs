@@ -10,6 +10,7 @@ namespace FME.PasswordManager
         IQueryable<T> GetAll();
         T GetById(string id);
         T Insert(T agregateRoot);
+        T Update(T agregateRoot);
         IQueryable<T> SearchFor(Expression<Func<T, bool>> predicate);
 
         string MasterKey { set; }

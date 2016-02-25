@@ -4,7 +4,10 @@ using System.IO;
 using System.Text;
 using FME.PasswordManager.Interfaces;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Schema;
+using Newtonsoft.Json.Schema.Generation;
 using Serilog;
+using StructureMap.Diagnostics;
 
 namespace FME.PasswordManager.Persistence
 {
@@ -31,9 +34,7 @@ namespace FME.PasswordManager.Persistence
             _encryptionStrategy = encryptionStrategy;
             _configuration = configuration;
         }
-
-     
-
+        
         private static void EnsureFolder(string path)
         {
             string directoryName = Path.GetDirectoryName(path);
@@ -57,7 +58,10 @@ namespace FME.PasswordManager.Persistence
                 using (StreamReader file = File.OpenText(_configuration.GetFullPath()))
                 {
                     string encryptedFile = file.ReadToEnd();
-                    return JsonConvert.DeserializeObject<List<T>>(_encryptionStrategy.Decrypt(encryptedFile));
+
+                    string decriptedText =_encryptionStrategy.Decrypt(encryptedFile);
+
+                    return JsonConvert.DeserializeObject<List<T>>(decriptedText);
                 }
             }
             catch (Newtonsoft.Json.JsonReaderException ex)
@@ -72,15 +76,12 @@ namespace FME.PasswordManager.Persistence
             try
             {
                 EnsureFolder(_configuration.StorageLocation);
-                using (FileStream fs = File.Open(_configuration.GetFullPath(), FileMode.OpenOrCreate))
-                { 
-                    string json = JsonConvert.SerializeObject(o);
-                    string encrypted = _encryptionStrategy.Encrypt(json);
 
-                    byte[] info = new UTF8Encoding(true).GetBytes(encrypted);
-                    fs.Write(info, 0, info.Length);
-                }
+                string json = JsonConvert.SerializeObject(o);
+                string encrypted = _encryptionStrategy.Encrypt(json);
 
+                File.WriteAllText(_configuration.GetFullPath(), encrypted);
+                
                 return true;
             }
             catch (Exception ex)

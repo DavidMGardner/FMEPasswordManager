@@ -38,7 +38,7 @@ namespace FME.PasswordManager.Tests
                 x.For<IEntityPersistence<PasswordEntity>>().Use<EntityMemoryPersistence<PasswordEntity>>();
                 x.For<IPasswordManagement>().Use<PasswordManagement>();
                 x.For<ILogger>().Use(log);
-                x.For<IRepository<PasswordEntity>>().Use<JsonRepository<PasswordEntity>>();
+                x.For<IRepository<PasswordEntity>>().Use<EntityRepository<PasswordEntity>>();
             });
         }
 
@@ -62,6 +62,41 @@ namespace FME.PasswordManager.Tests
             // assert
             jsonPersistence.GetAll().Count().ShouldBe(1);
             jsonPersistence.GetAll().First().Id.ShouldNotBeEmpty();
+        }
+
+        [Test]
+        public void UpdateEntityShouldChangeOnlyTheEntityWithMatchingId()
+        {
+            // arrange
+            var jsonPersistence = _container.GetInstance<IRepository<PasswordEntity>>();
+
+            var originalEntity = jsonPersistence.Insert(new PasswordEntity
+            {
+                CommonName = "Amazon",
+                Url = "www.amazon.com",
+                UserName = "dave@sample.com",
+                Password = "pass@word1"
+            });
+
+            // act
+            var updatedEntity = jsonPersistence.Update(new PasswordEntity
+            {
+                Id = originalEntity.Id,
+                CommonName = "Updated",
+                Password = "Updated",
+                Url = "Updated",
+                UserName = "Updated"
+            });
+
+            // assert
+            jsonPersistence.GetAll().Count().ShouldBe(1);
+            jsonPersistence.GetAll().First().Id.ShouldNotBeEmpty();
+
+            originalEntity.Id.ShouldBe(updatedEntity.Id);
+            originalEntity.CommonName.ShouldNotBe(updatedEntity.CommonName);
+            originalEntity.Password.ShouldNotBe(updatedEntity.Password);
+            originalEntity.Url.ShouldNotBe(updatedEntity.Url);
+            originalEntity.UserName.ShouldNotBe(updatedEntity.UserName);
         }
 
         [Test]

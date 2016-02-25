@@ -18,38 +18,37 @@ namespace FMEPasswordManager.Api.Controllers
             _repository = repository;
         }
 
-        // GET: api/PasswordManager
-        //IEnumerable<PasswordEntity>
-        [Route("api/PasswordManager")]
         [HttpPost]
+        [Route("api/PasswordManager")]
         public IEnumerable<PasswordEntity> GetFromBody([FromBody]string value)
         {
             if (String.IsNullOrWhiteSpace(value))
-            throw new ApiParameterNullException("MasterKey was not been provided via Body");
+                throw new ApiParameterNullException("MasterKey was not been provided via Body");
 
             _repository.MasterKey = value;
             return _repository.GetAll();
         }
 
-        // GET: api/PasswordManager/5
-        public PasswordEntity Get(string id)
-        {
-            return _repository.GetById(id);
-        }
-
-        // POST: api/PasswordManager
         [HttpPost]
         [Route("api/PasswordManager/Insert")]
-        public PasswordEntity Post([FromBody]PasswordManagementArgs value)
+        public PasswordEntity Post([FromBody]PasswordManagementViewModel value)
         {
+            if (String.IsNullOrWhiteSpace(value.MasterKey))
+                throw new ApiParameterNullException("MasterKey was not been provided via Body");
+
             _repository.MasterKey = value.MasterKey;
             return _repository.Insert(value.Entity);
         }
 
-        // PUT: api/PasswordManager/5
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [Route("api/PasswordManager")]
+        public PasswordEntity Put([FromBody]PasswordManagementViewModel value)
         {
-            throw new NotImplementedException();
+            if (String.IsNullOrWhiteSpace(value.MasterKey))
+                throw new ApiParameterNullException("MasterKey was not been provided via Body");
+
+            _repository.MasterKey = value.MasterKey;
+            return _repository.Update(value.Entity);
         }
 
         // DELETE: api/PasswordManager/5
@@ -66,7 +65,7 @@ namespace FMEPasswordManager.Api.Controllers
         public ApiParameterNullException(string value) : base(value) {}
     }
 
-    public class PasswordManagementArgs
+    public class PasswordManagementViewModel
     {
         public PasswordEntity Entity { get; set; }
         public string MasterKey { get; set; }
