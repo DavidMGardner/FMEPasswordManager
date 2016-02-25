@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FME.PasswordManager
+namespace FME.PasswordManager.Exceptions
 {
     public class EncryptionConfigurationException : Exception
     {

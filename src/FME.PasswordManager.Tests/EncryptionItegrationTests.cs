@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using FME.PasswordManager.Encryption;
+using FME.PasswordManager.Exceptions;
+using FME.PasswordManager.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using Serilog;

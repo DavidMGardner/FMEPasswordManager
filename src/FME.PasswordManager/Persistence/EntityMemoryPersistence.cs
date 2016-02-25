@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using FME.PasswordManager.Interfaces;
 
-namespace FME.PasswordManager
+namespace FME.PasswordManager.Persistence
 {
     public class EntityMemoryPersistence<T> : IEntityPersistence<T>
     {

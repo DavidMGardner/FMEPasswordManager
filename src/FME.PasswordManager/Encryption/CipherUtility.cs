@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace FME.PasswordManager
+namespace FME.PasswordManager.Encryption
 {
     public class CipherUtility
     {
         public static string Encrypt<T>(string value, string password, string salt) where T : SymmetricAlgorithm, new()
         {
+            if (String.IsNullOrWhiteSpace(password))
+                throw new MissingKeyException();
+
             DeriveBytes rgb = new Rfc2898DeriveBytes(password, Encoding.Unicode.GetBytes(salt));
 
             SymmetricAlgorithm algorithm = new T();
@@ -37,6 +37,9 @@ namespace FME.PasswordManager
 
         public static string Decrypt<T>(string text, string password, string salt) where T : SymmetricAlgorithm, new()
         {
+            if (String.IsNullOrWhiteSpace(password))
+                throw new MissingKeyException();
+
             DeriveBytes rgb = new Rfc2898DeriveBytes(password, Encoding.Unicode.GetBytes(salt));
 
             SymmetricAlgorithm algorithm = new T();
@@ -78,6 +81,14 @@ namespace FME.PasswordManager
                 tempSB.Append(alphaSet[b % (alphaSet.Length)]);
             }
             return tempSB.ToString();
+        }
+    }
+
+    public class MissingKeyException : Exception
+    {
+        public MissingKeyException() : base("The key provided was either null or empty.")
+        {
+            
         }
     }
 }

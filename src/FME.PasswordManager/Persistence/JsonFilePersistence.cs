@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using FME.PasswordManager.Interfaces;
 using Newtonsoft.Json;
 using Serilog;
 
-namespace FME.PasswordManager
+namespace FME.PasswordManager.Persistence
 {
     public class JsonFilePersistence<T> : IEntityPersistence<T>
     {

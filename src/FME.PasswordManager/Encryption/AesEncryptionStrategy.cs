@@ -1,6 +1,8 @@
 using System.Security.Cryptography;
+using FME.PasswordManager.Exceptions;
+using FME.PasswordManager.Interfaces;
 
-namespace FME.PasswordManager
+namespace FME.PasswordManager.Encryption
 {
     public class AesEncryptionStrategy : IEncryptionStrategy
     {

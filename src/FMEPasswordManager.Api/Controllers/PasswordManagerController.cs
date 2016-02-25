@@ -8,6 +8,7 @@ using FME.PasswordManager;
 
 namespace FMEPasswordManager.Api.Controllers
 {
+    [GlobalExceptionFilter]
     public class PasswordManagerController : ApiController
     {
         private readonly IRepository<PasswordEntity> _repository;
@@ -18,10 +19,14 @@ namespace FMEPasswordManager.Api.Controllers
         }
 
         // GET: api/PasswordManager
+        //IEnumerable<PasswordEntity>
         [Route("api/PasswordManager")]
         [HttpPost]
         public IEnumerable<PasswordEntity> GetFromBody([FromBody]string value)
         {
+            if (String.IsNullOrWhiteSpace(value))
+            throw new ApiParameterNullException("MasterKey was not been provided via Body");
+
             _repository.MasterKey = value;
             return _repository.GetAll();
         }
@@ -33,6 +38,8 @@ namespace FMEPasswordManager.Api.Controllers
         }
 
         // POST: api/PasswordManager
+        [HttpPost]
+        [Route("api/PasswordManager/Insert")]
         public PasswordEntity Post([FromBody]PasswordManagementArgs value)
         {
             _repository.MasterKey = value.MasterKey;
@@ -52,6 +59,11 @@ namespace FMEPasswordManager.Api.Controllers
             if(aggregateRoot != null)
                 _repository.Delete(aggregateRoot);
         }
+    }
+
+    public class ApiParameterNullException : Exception
+    {
+        public ApiParameterNullException(string value) : base(value) {}
     }
 
     public class PasswordManagementArgs

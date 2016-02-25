@@ -18,6 +18,8 @@ namespace FMEPasswordManager.Api
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
 
+            //GlobalConfiguration.Configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Never;
+
             var config = GlobalConfiguration.Configuration;
             var container = IoC.Container; // You build this up yourself.
             config.DependencyResolver = new StructureMapResolver(container);

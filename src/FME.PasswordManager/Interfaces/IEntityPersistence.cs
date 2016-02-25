@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace FME.PasswordManager
+namespace FME.PasswordManager.Interfaces
 {
     public interface IEntityPersistence<T> 
     {

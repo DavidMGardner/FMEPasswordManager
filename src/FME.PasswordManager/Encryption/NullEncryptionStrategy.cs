@@ -1,4 +1,6 @@
-﻿namespace FME.PasswordManager
+﻿using FME.PasswordManager.Interfaces;
+
+namespace FME.PasswordManager.Encryption
 {
     public class NullEncryptionStrategy : IEncryptionStrategy
     {

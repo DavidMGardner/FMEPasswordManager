@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
+using FME.PasswordManager.Interfaces;
+using FME.PasswordManager.Persistence;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 using Serilog;

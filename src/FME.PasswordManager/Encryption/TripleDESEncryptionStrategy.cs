@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Cryptography;
+using FME.PasswordManager.Exceptions;
+using FME.PasswordManager.Interfaces;
 
-namespace FME.PasswordManager
+namespace FME.PasswordManager.Encryption
 {
     public class TripleDESEncryptionStrategy : IEncryptionStrategy
     {
