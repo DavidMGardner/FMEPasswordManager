@@ -7,5 +7,7 @@ namespace FME.PasswordManager.Interfaces
         bool PutList(List<T> entities);
         bool AddRange(List<T> entities);
         List<T> GetList();
+
+        bool EnsureList();
     }
 }

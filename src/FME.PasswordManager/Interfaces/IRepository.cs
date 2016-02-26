@@ -12,5 +12,6 @@ namespace FME.PasswordManager
         T Insert(T agregateRoot);
         T Update(T agregateRoot);
         IQueryable<T> SearchFor(Expression<Func<T, bool>> predicate);
+        bool EnsureRepository();
     }
 }

@@ -35,6 +35,27 @@ namespace FME.PasswordManager.Serialization
             }
         }
 
+        public bool EnsureContainer()
+        {
+            try
+            {
+                if (File.Exists(_configuration.GetFullPath()) == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return SerializeObject(new List<T>());
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex.Message);
+            }
+
+            return false;
+        }
+
         public bool SerializeObject(object o)
         {
             try

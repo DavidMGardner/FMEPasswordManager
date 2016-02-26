@@ -14,26 +14,16 @@ namespace FMEPasswordManager.Api.Controllers
     public class PasswordManagerController : ApiController
     {
         private readonly IRepository<PasswordEntity> _repository;
-
         public PasswordManagerController(IRepository<PasswordEntity> repository)
         {
             _repository = repository;
-        }
-
-        private void SetMasterKey()
-        {
-            var header = Request.GetFirstHeaderValueOrDefault<string>("X-MasterKey");
-            if (String.IsNullOrWhiteSpace(header))
-                throw new ApiParameterNullException("MasterKey was not been provided via http header");
-
-            _repository.MasterKey(header);
         }
 
         [HttpGet]
         [Route("api/PasswordManager")]
         public IEnumerable<PasswordEntity> Get()
         {
-            SetMasterKey();
+            this.SetMasterKey((IKey)_repository);
             return _repository.GetAll();
         }
 
@@ -41,7 +31,7 @@ namespace FMEPasswordManager.Api.Controllers
         [Route("api/PasswordManager/{id}")]
         public PasswordEntity GetById(string id)
         {
-            SetMasterKey();
+            this.SetMasterKey((IKey)_repository);
             return _repository.GetById(id);
         }
 
@@ -49,7 +39,7 @@ namespace FMEPasswordManager.Api.Controllers
         [Route("api/PasswordManager")]
         public PasswordEntity Post([FromBody]PasswordEntity value)
         {
-            SetMasterKey();
+            this.SetMasterKey((IKey)_repository);
             return _repository.Insert(value);
         }
 
@@ -57,22 +47,19 @@ namespace FMEPasswordManager.Api.Controllers
         [Route("api/PasswordManager")]
         public PasswordEntity Put([FromBody]PasswordEntity value)
         {
-            SetMasterKey();
+            this.SetMasterKey((IKey)_repository);
             return _repository.Update(value);
         }
 
         // DELETE: api/PasswordManager/5
         public void Delete(string id)
         {
-            SetMasterKey();
+            this.SetMasterKey((IKey)_repository);
             var aggregateRoot = _repository.GetById(id);
             if(aggregateRoot != null)
                 _repository.Delete(aggregateRoot);
         }
     }
 
-    public class ApiParameterNullException : Exception
-    {
-        public ApiParameterNullException(string value) : base(value) {}
-    }
+    
 }

@@ -35,5 +35,10 @@ namespace FME.PasswordManager.Persistence
 
             return _records.ToList();
         }
+
+        public bool EnsureList()
+        {
+            return _records != null;
+        }
     } 
 }

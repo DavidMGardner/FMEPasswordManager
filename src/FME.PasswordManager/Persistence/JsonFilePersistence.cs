@@ -37,5 +37,10 @@ namespace FME.PasswordManager.Persistence
         {
             return _serialization.DeserializeObject();
         }
+
+        public bool EnsureList()
+        {
+            return _serialization.EnsureContainer();
+        }
     }
 }

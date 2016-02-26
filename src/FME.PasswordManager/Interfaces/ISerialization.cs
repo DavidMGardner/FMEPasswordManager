@@ -6,5 +6,6 @@ namespace FME.PasswordManager.Interfaces
     {
         List<T> DeserializeObject();
         bool SerializeObject(object o);
+        bool EnsureContainer();
     }
 }

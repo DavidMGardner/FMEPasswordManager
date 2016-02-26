@@ -74,6 +74,11 @@ namespace FME.PasswordManager
             return default(T);
         }
 
+        public bool EnsureRepository()
+        {
+            return _persistence.EnsureList();
+        }
+
         public IQueryable<T> SearchFor(Expression<Func<T, bool>> predicate)
         {
             return _persistence.GetList().AsQueryable().Where(predicate);
