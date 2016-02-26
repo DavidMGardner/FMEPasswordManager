@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
+using FME.PasswordManager.Configuration;
 using FME.PasswordManager.Interfaces;
 using FME.PasswordManager.Persistence;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,7 +33,7 @@ namespace FME.PasswordManager.Tests
 
             _container.Configure(x =>
             {
-                x.For<IConfiguration>().Use<Configuration>();
+                x.For<IConfiguration>().Use<SynchronizedConfiguration>();
 
                 // use the memory persistence purly for testing
                 x.For<IEntityPersistence<PasswordEntity>>().Use<EntityMemoryPersistence<PasswordEntity>>();

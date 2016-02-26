@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using FME.PasswordManager.Configuration;
 using FME.PasswordManager.Interfaces;
 
 namespace FME.PasswordManager.Persistence

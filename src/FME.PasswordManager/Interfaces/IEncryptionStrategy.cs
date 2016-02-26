@@ -4,7 +4,5 @@
     {
         string Encrypt(string value);
         string Decrypt(string text);
-
-        IConfiguration Configuration { get; set; }
     }
 }

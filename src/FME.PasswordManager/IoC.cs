@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using FME.PasswordManager.Configuration;
 using StructureMap;
 using StructureMap.Graph;
 
@@ -20,7 +21,7 @@ namespace FME.PasswordManager
         {
             return new Container(x =>
             {
-                x.For<IConfiguration>().Use<Configuration>();
+                x.For<IConfiguration>().Use<SynchronizedConfiguration>();
 
                 x.Scan(scan =>
                 {

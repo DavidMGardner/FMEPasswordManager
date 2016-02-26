@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using FME.PasswordManager.Interfaces;
+using FME.PasswordManager.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Schema.Generation;
@@ -13,88 +14,16 @@ namespace FME.PasswordManager.Persistence
 {
     public class JsonFilePersistence<T> : IEntityPersistence<T>
     {
-        private IConfiguration _configuration;
-        private readonly ILogger _logger;
-        private readonly IEncryptionStrategy _encryptionStrategy;
-
-        public string MasterKey
+        private readonly ISerialization<T> _serialization;
+        
+        public JsonFilePersistence(ISerialization<T> serialization)
         {
-            set { _encryptionStrategy.Configuration.MasterKey = value; }
-        }
-
-        public IConfiguration Configuration
-        {
-            get { return _configuration; }
-            set { _configuration = value; }
-        }
-
-        public JsonFilePersistence(IConfiguration configuration, ILogger logger, IEncryptionStrategy encryptionStrategy)
-        {
-            _logger = logger;
-            _encryptionStrategy = encryptionStrategy;
-            _configuration = configuration;
+            _serialization = serialization;
         }
         
-        private static void EnsureFolder(string path)
-        {
-            string directoryName = Path.GetDirectoryName(path);
-            if (!String.IsNullOrEmpty(directoryName) && (!Directory.Exists(directoryName)))
-            {
-                Directory.CreateDirectory(directoryName);
-            }
-        }
-
-        private List<T> DeserializeObject()
-        {
-            try
-            {
-                EnsureFolder(_configuration.StorageLocation);
-
-                if (File.Exists(_configuration.GetFullPath()) == false)
-                {
-                    return new List<T>();
-                }
-
-                using (StreamReader file = File.OpenText(_configuration.GetFullPath()))
-                {
-                    string encryptedFile = file.ReadToEnd();
-
-                    string decriptedText =_encryptionStrategy.Decrypt(encryptedFile);
-
-                    return JsonConvert.DeserializeObject<List<T>>(decriptedText);
-                }
-            }
-            catch (Newtonsoft.Json.JsonReaderException ex)
-            {
-                _logger.Error(ex.Message);
-                throw new EncryptedDeserializationException(ex.Message);
-            }
-        } 
-
-        private bool SerializeObject(object o)
-        {
-            try
-            {
-                EnsureFolder(_configuration.StorageLocation);
-
-                string json = JsonConvert.SerializeObject(o);
-                string encrypted = _encryptionStrategy.Encrypt(json);
-
-                File.WriteAllText(_configuration.GetFullPath(), encrypted);
-                
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex.Message);
-            }
-
-            return false;
-        }
-
         public bool PutList(List<T> entities)
         {
-            return SerializeObject(entities);
+            return _serialization.SerializeObject(entities);
         }
 
         public bool AddRange(List<T> entities)
@@ -106,13 +35,7 @@ namespace FME.PasswordManager.Persistence
 
         public List<T> GetList()
         {
-            return DeserializeObject();
+            return _serialization.DeserializeObject();
         }
-    }
-
-    internal class EncryptedDeserializationException : Exception
-    {
-        public EncryptedDeserializationException(string message) : 
-            base($"Error trying to deserialize repository, did you forget the correct master key or salt? --> Inner Exception: {message}") {}
     }
 }

@@ -4,23 +4,26 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using FME.PasswordManager.Configuration;
 using FME.PasswordManager.Interfaces;
 using Moo.Extenders;
 
 namespace FME.PasswordManager
 {
-    public class EntityRepository<T> : IRepository<T> where T : IEntity
+    public class EntityRepository<T> : IKey, IRepository<T> where T : IEntity
     {
+        private readonly IConfiguration _configuration;
         private readonly IEntityPersistence<T> _persistence;
         private readonly IPasswordManagement _passwordManagement;
 
         public string MasterKey
         {
-            set { _persistence.Configuration.MasterKey = value; } 
+            set {_configuration.MasterKey = value; } 
         }
 
-        public EntityRepository(IEntityPersistence<T> persistence, IPasswordManagement passwordManagement)
+        public EntityRepository(IConfiguration configuration, IEntityPersistence<T> persistence, IPasswordManagement passwordManagement)
         {
+            _configuration = configuration;
             _persistence = persistence;
             _passwordManagement = passwordManagement;
         }

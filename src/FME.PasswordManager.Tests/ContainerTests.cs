@@ -23,6 +23,7 @@ namespace FME.PasswordManager.Tests
             _container.Configure(x =>
             {
                 x.For<ITestInterface>().Use<TestConcrete>();
+                x.For<IKey>().Use<TestConcrete>();
             });
         }
 
@@ -30,20 +31,41 @@ namespace FME.PasswordManager.Tests
         [Test]
         public void ResolveStaticContainerTypeShouldNotBeNull()
         {
-            var testData = _container.GetInstance<ITestInterface>();
+            var container = new Container(_ =>
+            {
+                _.For<ITestInterface>().Use<TestConcrete>();
+                _.Forward<ITestInterface, IKey>();
+            });
+
+
+            container.GetInstance<ITestInterface>().ShouldBeOfType<TestConcrete>();
+
+            var testData = container.GetInstance<ITestInterface>();
+            var keyData = (IKey) testData;
 
             testData.Success().ShouldBe("Success");
+            testData.ShouldBeSameAs(keyData);
         }
     }
 
 
 
-    public class TestConcrete : ITestInterface
+    public class TestConcrete : ITestInterface, IKey
     {
         public string Success()
         {
             return "Success";
         }
+
+        public string MasterKey
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
+
+    public interface IKey
+    {
+        string MasterKey { get; }
     }
 
     public interface ITestInterface

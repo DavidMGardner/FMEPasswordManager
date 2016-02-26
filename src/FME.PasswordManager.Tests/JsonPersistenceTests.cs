@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FME.PasswordManager.Configuration;
 using FME.PasswordManager.Encryption;
 using FME.PasswordManager.Interfaces;
 using FME.PasswordManager.Persistence;
@@ -44,7 +45,7 @@ namespace FME.PasswordManager.Tests
                 x.For<IEntityPersistence<PasswordEntity>>().Use<JsonFilePersistence<PasswordEntity>>();
                 x.For<IRepository<PasswordEntity>>().Use<EntityRepository<PasswordEntity>>();
                 
-                x.For<IConfiguration>().Use<Configuration>();
+                x.For<IConfiguration>().Use<SynchronizedConfiguration>();
                 x.For<IEncryptionStrategy>().Use<TripleDESEncryptionStrategy>();
                 x.For<ILogger>().Use(log);
             });
@@ -55,7 +56,7 @@ namespace FME.PasswordManager.Tests
         {
             // arrange
             var storage = _container.GetInstance<IEntityPersistence<PasswordEntity>>();
-            storage.Configuration.MasterKey = Guid.NewGuid().ToString();
+            //storage.Configuration.MasterKey = Guid.NewGuid().ToString();
 
             // act
             bool success = storage.PutList(new List<PasswordEntity>
@@ -81,7 +82,7 @@ namespace FME.PasswordManager.Tests
             File.Delete(_container.GetInstance<IConfiguration>().GetFullPath());
 
             var storage = _container.GetInstance<IRepository<PasswordEntity>>();
-            storage.MasterKey = Guid.NewGuid().ToString();
+            //storage.MasterKey = Guid.NewGuid().ToString();
             
             // act
             var insertedItem = storage.Insert(new PasswordEntity

@@ -1,4 +1,5 @@
-﻿using FME.PasswordManager.Interfaces;
+﻿using FME.PasswordManager.Configuration;
+using FME.PasswordManager.Interfaces;
 
 namespace FME.PasswordManager.Encryption
 {

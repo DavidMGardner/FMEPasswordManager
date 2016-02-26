@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using FME.PasswordManager.Configuration;
 using FME.PasswordManager.Encryption;
 using FME.PasswordManager.Exceptions;
 using FME.PasswordManager.Interfaces;
@@ -33,7 +34,7 @@ namespace FME.PasswordManager.Tests
 
             _container.Configure(x =>
             {
-                x.For<IConfiguration>().Use<Configuration>();
+                x.For<IConfiguration>().Singleton().Use<SynchronizedConfiguration>();
                 x.For<IEncryptionStrategy>().Use<TripleDESEncryptionStrategy>();
                 x.For<ILogger>().Use(log);
             });
@@ -63,7 +64,7 @@ namespace FME.PasswordManager.Tests
             string messageToEncrypt =
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis eros viverra, lacinia nisi ac, bibendum erat. Sed dolor quam.";
 
-            encryptor.Configuration.MasterKey = Guid.NewGuid().ToString();
+            _container.GetInstance<IConfiguration>().MasterKey = Guid.NewGuid().ToString();
 
             // act
             string encryptedMessage = encryptor.Encrypt(messageToEncrypt);
@@ -83,12 +84,13 @@ namespace FME.PasswordManager.Tests
             // arrange
             var encryptor = _container.GetInstance<IEncryptionStrategy>();
 
+
             string messageToEncrypt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis eros viverra, lacinia nisi ac, bibendum erat. Sed dolor quam.";
-            encryptor.Configuration.MasterKey = Guid.NewGuid().ToString();
+            _container.GetInstance<IConfiguration>().MasterKey = Guid.NewGuid().ToString();
 
             // act
             string encryptedMessage = encryptor.Encrypt(messageToEncrypt);
-            encryptor.Configuration.EncryptionSalt = "Bad Salt";
+            _container.GetInstance<IConfiguration>().EncryptionSalt = "Bad Salt";
 
             // assert
             Should.Throw<EncryptionStrategyException>(() => encryptor.Decrypt(encryptedMessage));
@@ -101,11 +103,11 @@ namespace FME.PasswordManager.Tests
             var encryptor = _container.GetInstance<IEncryptionStrategy>();
 
             string messageToEncrypt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam venenatis eros viverra, lacinia nisi ac, bibendum erat. Sed dolor quam.";
-            encryptor.Configuration.MasterKey = "Good Key";
+            _container.GetInstance<IConfiguration>().MasterKey = "Good Key";
 
             // act
             string encryptedMessage = encryptor.Encrypt(messageToEncrypt);
-            encryptor.Configuration.MasterKey = "Bad Key";
+            _container.GetInstance<IConfiguration>().MasterKey = "Bad Key";
             
             // assert
             Should.Throw<EncryptionStrategyException>(()=> encryptor.Decrypt(encryptedMessage));
@@ -130,7 +132,6 @@ namespace FME.PasswordManager.Tests
             config.MasterKey = Guid.NewGuid().ToString();
 
             // act
-            encryptor.Configuration = config;
             string encryptedMessage = encryptor.Encrypt(messageToEncrypt);
             logger.Information(encryptedMessage);
 
@@ -162,7 +163,6 @@ namespace FME.PasswordManager.Tests
             config.MasterKey = Guid.NewGuid().ToString();
 
             // act
-            encrypter.Configuration = config;
             string encryptedMessage = encrypter.Encrypt(messageToEncrypt);
             logger.Information(encryptedMessage);
 

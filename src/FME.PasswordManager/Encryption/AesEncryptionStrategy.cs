@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using FME.PasswordManager.Configuration;
 using FME.PasswordManager.Exceptions;
 using FME.PasswordManager.Interfaces;
 
