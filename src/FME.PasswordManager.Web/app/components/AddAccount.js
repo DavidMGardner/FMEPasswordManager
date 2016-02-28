@@ -65,7 +65,7 @@ class AddAccount extends React.Component {
                             <div className='panel-body'>
                                 <form onSubmit={this.handleSubmit.bind(this)}>
 
-                                    //account input
+                                    {/* account input */}
                                     <div className={'form-group ' + this.state.accountValidationState}>
                                         <label className='control-label'>Account</label>
                                         <input type='text' className='form-control' ref='accountTextField' value={this.state.account}
@@ -73,7 +73,7 @@ class AddAccount extends React.Component {
                                         <span className='help-block'>{this.state.helpBlock}</span>
                                     </div>
 
-                                    //password input
+                                    {/* password input */}
                                     <div className={'form-group ' + this.state.passwordValidationState}>
                                         <label className='control-label'>Password</label>
                                         <input type='text' className='form-control' ref='passwordTextField' value={this.state.password}
@@ -81,7 +81,7 @@ class AddAccount extends React.Component {
                                         <span className='help-block'>{this.state.helpBlock}</span>
                                     </div>
 
-                                    //email
+                                    {/* email */}
                                     <div className={'form-group ' + this.state.emailValidationState}>
                                         <label className='control-label'>Email</label>
                                         <input type='text' className='form-control' ref='accountTextField' value={this.state.email}
@@ -89,7 +89,15 @@ class AddAccount extends React.Component {
                                         <span className='help-block'>{this.state.helpBlock}</span>
                                     </div>
 
-                                    //submit button
+                                    {/* username */}
+                                    <div className={'form-group ' + this.state.usernamelValidationState}>
+                                        <label className='control-label'>Username</label>
+                                        <input type='text' className='form-control' ref='accountTextField' value={this.state.username}
+                                               onChange={AddAccountActions.updateUsername} autoFocus/>
+                                        <span className='help-block'>{this.state.helpBlock}</span>
+                                    </div>
+
+                                    {/* submit button */}
                                     <button type='submit' className='btn btn-primary'>Submit</button>
                                 </form>
                             </div>

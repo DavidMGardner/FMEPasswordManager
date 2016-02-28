@@ -177,7 +177,6 @@ var AddAccount = function (_React$Component) {
                                 _react2.default.createElement(
                                     'form',
                                     { onSubmit: this.handleSubmit.bind(this) },
-                                    '//account input',
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'form-group ' + this.state.accountValidationState },
@@ -194,7 +193,6 @@ var AddAccount = function (_React$Component) {
                                             this.state.helpBlock
                                         )
                                     ),
-                                    '//password input',
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'form-group ' + this.state.passwordValidationState },
@@ -211,7 +209,6 @@ var AddAccount = function (_React$Component) {
                                             this.state.helpBlock
                                         )
                                     ),
-                                    '//email',
                                     _react2.default.createElement(
                                         'div',
                                         { className: 'form-group ' + this.state.emailValidationState },
@@ -228,7 +225,22 @@ var AddAccount = function (_React$Component) {
                                             this.state.helpBlock
                                         )
                                     ),
-                                    '//submit button',
+                                    _react2.default.createElement(
+                                        'div',
+                                        { className: 'form-group ' + this.state.usernamelValidationState },
+                                        _react2.default.createElement(
+                                            'label',
+                                            { className: 'control-label' },
+                                            'Username'
+                                        ),
+                                        _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'accountTextField', value: this.state.username,
+                                            onChange: _AddAccountActions2.default.updateUsername, autoFocus: true }),
+                                        _react2.default.createElement(
+                                            'span',
+                                            { className: 'help-block' },
+                                            this.state.helpBlock
+                                        )
+                                    ),
                                     _react2.default.createElement(
                                         'button',
                                         { type: 'submit', className: 'btn btn-primary' },
@@ -248,7 +260,7 @@ var AddAccount = function (_React$Component) {
 
 exports.default = AddAccount;
 
-},{"../actions/AddAccountActions":1,"../stores/AddAccountStore":9,"react":"react"}],4:[function(require,module,exports){
+},{"../actions/AddAccountActions":1,"../stores/AddAccountStore":8,"react":"react"}],4:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -260,14 +272,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _Header = require('./Header');
-
-var _Header2 = _interopRequireDefault(_Header);
-
-var _Footer = require('./Footer');
-
-var _Footer2 = _interopRequireDefault(_Footer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -292,9 +296,7 @@ var App = function (_React$Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_Header2.default, { history: this.props.history }),
-                this.props.children,
-                _react2.default.createElement(_Footer2.default, null)
+                this.props.children
             );
         }
     }]);
@@ -304,13 +306,53 @@ var App = function (_React$Component) {
 
 exports.default = App;
 
-},{"./Footer":5,"./Header":6,"react":"react"}],5:[function(require,module,exports){
-"use strict";
+},{"react":"react"}],5:[function(require,module,exports){
+'use strict';
 
-},{}],6:[function(require,module,exports){
-"use strict";
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 
-},{}],7:[function(require,module,exports){
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Login = function (_React$Component) {
+    _inherits(Login, _React$Component);
+
+    function Login() {
+        _classCallCheck(this, Login);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Login).apply(this, arguments));
+    }
+
+    _createClass(Login, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'alert alert-info' },
+                'Landing Component'
+            );
+        }
+    }]);
+
+    return Login;
+}(_react2.default.Component);
+
+exports.default = Login;
+
+},{"react":"react"}],6:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -341,9 +383,9 @@ _reactDom2.default.render(_react2.default.createElement(
   _reactRouter2.default,
   { history: history },
   _routes2.default
-), document.getElementById('app'));s;
+), document.getElementById('app'));
 
-},{"./routes":8,"history/lib/createBrowserHistory":16,"react":"react","react-dom":"react-dom","react-router":"react-router"}],8:[function(require,module,exports){
+},{"./routes":7,"history/lib/createBrowserHistory":15,"react":"react","react-dom":"react-dom","react-router":"react-router"}],7:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -360,6 +402,10 @@ var _App = require('./components/App');
 
 var _App2 = _interopRequireDefault(_App);
 
+var _Login = require('./components/Login');
+
+var _Login2 = _interopRequireDefault(_Login);
+
 var _AddAccount = require('./components/AddAccount');
 
 var _AddAccount2 = _interopRequireDefault(_AddAccount);
@@ -369,10 +415,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _react2.default.createElement(
     _reactRouter.Route,
     { component: _App2.default },
+    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _Login2.default }),
     _react2.default.createElement(_reactRouter.Route, { path: '/add', component: _AddAccount2.default })
 );
 
-},{"./components/AddAccount":3,"./components/App":4,"react":"react","react-router":"react-router"}],9:[function(require,module,exports){
+},{"./components/AddAccount":3,"./components/App":4,"./components/Login":5,"react":"react","react-router":"react-router"}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -479,7 +526,7 @@ var AddAccountStore = function () {
 
 exports.default = _alt2.default.createStore(AddAccountStore);
 
-},{"../actions/AddAccountActions":1,"../alt":2}],10:[function(require,module,exports){
+},{"../actions/AddAccountActions":1,"../alt":2}],9:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -572,7 +619,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * Indicates that navigation was caused by a call to history.push.
  */
@@ -604,7 +651,7 @@ exports['default'] = {
   REPLACE: REPLACE,
   POP: POP
 };
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -631,7 +678,7 @@ function loopAsync(turns, work, callback) {
 
   next();
 }
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 (function (process){
 /*eslint-disable no-empty */
 'use strict';
@@ -703,7 +750,7 @@ function readState(key) {
 }
 }).call(this,require('_process'))
 
-},{"_process":10,"warning":28}],14:[function(require,module,exports){
+},{"_process":9,"warning":27}],13:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
@@ -784,13 +831,13 @@ function supportsGoWithoutReloadUsingHash() {
   var ua = navigator.userAgent;
   return ua.indexOf('Firefox') === -1;
 }
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 exports.__esModule = true;
 var canUseDOM = !!(typeof window !== 'undefined' && window.document && window.document.createElement);
 exports.canUseDOM = canUseDOM;
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -972,7 +1019,7 @@ exports['default'] = createBrowserHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"./Actions":11,"./DOMStateStorage":13,"./DOMUtils":14,"./ExecutionEnvironment":15,"./createDOMHistory":17,"./parsePath":22,"_process":10,"invariant":27}],17:[function(require,module,exports){
+},{"./Actions":10,"./DOMStateStorage":12,"./DOMUtils":13,"./ExecutionEnvironment":14,"./createDOMHistory":16,"./parsePath":21,"_process":9,"invariant":26}],16:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1016,7 +1063,7 @@ exports['default'] = createDOMHistory;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"./DOMUtils":14,"./ExecutionEnvironment":15,"./createHistory":18,"_process":10,"invariant":27}],18:[function(require,module,exports){
+},{"./DOMUtils":13,"./ExecutionEnvironment":14,"./createHistory":17,"_process":9,"invariant":26}],17:[function(require,module,exports){
 //import warning from 'warning'
 'use strict';
 
@@ -1308,7 +1355,7 @@ function createHistory() {
 
 exports['default'] = createHistory;
 module.exports = exports['default'];
-},{"./Actions":11,"./AsyncUtils":12,"./createLocation":19,"./deprecate":20,"./parsePath":22,"./runTransitionHook":23,"deep-equal":24}],19:[function(require,module,exports){
+},{"./Actions":10,"./AsyncUtils":11,"./createLocation":18,"./deprecate":19,"./parsePath":21,"./runTransitionHook":22,"deep-equal":23}],18:[function(require,module,exports){
 //import warning from 'warning'
 'use strict';
 
@@ -1363,7 +1410,7 @@ function createLocation() {
 
 exports['default'] = createLocation;
 module.exports = exports['default'];
-},{"./Actions":11,"./parsePath":22}],20:[function(require,module,exports){
+},{"./Actions":10,"./parsePath":21}],19:[function(require,module,exports){
 //import warning from 'warning'
 
 "use strict";
@@ -1379,7 +1426,7 @@ function deprecate(fn) {
 
 exports["default"] = deprecate;
 module.exports = exports["default"];
-},{}],21:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 
 exports.__esModule = true;
@@ -1393,7 +1440,7 @@ function extractPath(string) {
 
 exports["default"] = extractPath;
 module.exports = exports["default"];
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1441,7 +1488,7 @@ exports['default'] = parsePath;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"./extractPath":21,"_process":10,"warning":28}],23:[function(require,module,exports){
+},{"./extractPath":20,"_process":9,"warning":27}],22:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -1469,7 +1516,7 @@ exports['default'] = runTransitionHook;
 module.exports = exports['default'];
 }).call(this,require('_process'))
 
-},{"_process":10,"warning":28}],24:[function(require,module,exports){
+},{"_process":9,"warning":27}],23:[function(require,module,exports){
 var pSlice = Array.prototype.slice;
 var objectKeys = require('./lib/keys.js');
 var isArguments = require('./lib/is_arguments.js');
@@ -1565,7 +1612,7 @@ function objEquiv(a, b, opts) {
   return typeof a === typeof b;
 }
 
-},{"./lib/is_arguments.js":25,"./lib/keys.js":26}],25:[function(require,module,exports){
+},{"./lib/is_arguments.js":24,"./lib/keys.js":25}],24:[function(require,module,exports){
 var supportsArgumentsClass = (function(){
   return Object.prototype.toString.call(arguments)
 })() == '[object Arguments]';
@@ -1587,7 +1634,7 @@ function unsupported(object){
     false;
 };
 
-},{}],26:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 exports = module.exports = typeof Object.keys === 'function'
   ? Object.keys : shim;
 
@@ -1598,7 +1645,7 @@ function shim (obj) {
   return keys;
 }
 
-},{}],27:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2013-2015, Facebook, Inc.
@@ -1654,7 +1701,7 @@ module.exports = invariant;
 
 }).call(this,require('_process'))
 
-},{"_process":10}],28:[function(require,module,exports){
+},{"_process":9}],27:[function(require,module,exports){
 (function (process){
 /**
  * Copyright 2014-2015, Facebook, Inc.
@@ -1719,7 +1766,7 @@ module.exports = warning;
 
 }).call(this,require('_process'))
 
-},{"_process":10}]},{},[7])
+},{"_process":9}]},{},[6])
 
 
 //# sourceMappingURL=bundle.js.map
