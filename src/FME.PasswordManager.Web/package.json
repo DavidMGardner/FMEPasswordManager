@@ -1,6 +1,6 @@
-﻿{
-  "name": "FME.PasswordManger.Web",
-  "description": "",
+{
+  "name": "passwordmanager",
+  "description": "FME Password Manager",
   "version": "1.0.0",
   "repository": {
     "type": "git",
@@ -9,7 +9,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "watch": "nodemon server.js"
+    "watch": "nodemon server.js",
+    "postinstall": "bower install && gulp build"
   },
   "babel": {
     "presets": ["es2015", "react"]
