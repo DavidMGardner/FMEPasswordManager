@@ -1,9 +1,24 @@
-﻿{
-  "name": "FMEPasswordManager",
+{
+  "name": "FME.PasswordManager.Web",
+  "homepage": "https://github.com/DavidMGardner/FMEPasswordManager",
+  "authors": [
+    "Wes White <wtealwhite@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-    "jquery": "^2.1.4",
-    "bootstrap": "^3.3.5",
-    "magnific-popup": "^1.0.0",
-    "toastr": "^2.1.1"
+    "jquery": "^2.2.1",
+    "bootstrap": "^3.3.6",
+    "magnific-popup": "^1.1.0",
+    "toastr": "^2.1.2"
   }
 }
