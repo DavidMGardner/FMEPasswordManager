@@ -28,7 +28,7 @@ class Footer extends React.Component {
                     <div className='row'>
                         <div className='col-sm-5'>
                             <h3 className='lead'><strong>Password Manager</strong></h3>
-                            <p>You may view the <a href='https://github.com/DavidMGardner/FMEPasswordManager'>Source Code</a> behind this project on GitHub.</p>
+                            <p>View the source code behind this project on <a href='https://github.com/DavidMGardner/FMEPasswordManager'>GitHub.</a></p>
                             <p>© 2016 Full Metal Engineering</p>
                             <h4>Brutally Secure</h4>
                         </div>

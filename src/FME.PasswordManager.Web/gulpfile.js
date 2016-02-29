@@ -13,6 +13,7 @@ var browserify = require('browserify');
 var watchify = require('watchify');
 var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
+var lint = require('gulp-eslint');
 
 var production = process.env.NODE_ENV === 'production';
 
@@ -94,10 +95,16 @@ gulp.task('styles', function() {
         .pipe(gulp.dest('public/css'));
 });
 
+gulp.task('lint', function() {
+    return gulp.src('bundle.js')
+        .pipe(lint({config: 'eslint.config.json'}))
+        .pipe(lint.format());
+});
+
 
 gulp.task('watch', function() {
     gulp.watch('app/stylesheets/**/*.less', ['styles']);
 });
 
-gulp.task('default', ['styles', 'vendor', 'browserify-watch', 'watch']);
+gulp.task('default', ['styles', 'vendor', 'browserify-watch', 'lint', 'watch']);
 gulp.task('build', ['styles', 'vendor', 'browserify']);

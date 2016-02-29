@@ -401,13 +401,12 @@ var Footer = function (_React$Component) {
                             _react2.default.createElement(
                                 'p',
                                 null,
-                                'You may view the ',
+                                'View the source code behind this project on ',
                                 _react2.default.createElement(
                                     'a',
                                     { href: 'https://github.com/DavidMGardner/FMEPasswordManager' },
-                                    'Source Code'
-                                ),
-                                ' behind this project on GitHub.'
+                                    'GitHub.'
+                                )
                             ),
                             _react2.default.createElement(
                                 'p',
