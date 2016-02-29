@@ -92,25 +92,22 @@ footer .thumb-md {
 }
 
 /* Animations */
+
+.animated {
+  animation-fill-mode: both;
+  animation-duration: .8s;
+}
+
 @keyframes flipInX {
   0% {
-    transform: perspective(800px) rotate3d(1,0,0,90deg);
+    transform: perspective(800px) rotate3d(1,0,0,80deg);
     transition-timing-function: ease-in;
     opacity: 0;
   }
 
-  40% {
-    transform: perspective(800px) rotate3d(1,0,0,-20deg);
+  50% {
+    transform: perspective(800px) rotate3d(1,0,0,-10deg);
     transition-timing-function: ease-in;
-  }
-
-  60% {
-    transform: perspective(800px) rotate3d(1,0,0,10deg);
-    opacity: 1;
-  }
-
-  80% {
-    transform: perspective(800px) rotate3d(1,0,0,-5deg);
   }
 
   100% {

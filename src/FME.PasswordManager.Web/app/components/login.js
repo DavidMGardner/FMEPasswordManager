@@ -16,11 +16,6 @@ class Login extends React.Component {
                                 Table Component
                             </div>
                         </Link>
-                        <Link to={'/add/'}>
-                            <div className='alert alert-warning'>
-                                Add Account Component
-                            </div>
-                        </Link>
                     </div>
                 </div>
 

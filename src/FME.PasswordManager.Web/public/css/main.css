@@ -7303,28 +7303,25 @@ footer .thumb-md:hover {
   padding: 2px 5px;
 }
 /* Animations */
+.animated {
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+  -webkit-animation-duration: .8s;
+          animation-duration: .8s;
+}
 @-webkit-keyframes flipInX {
   0% {
-    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, 90deg);
-            transform: perspective(800px) rotate3d(1, 0, 0, 90deg);
+    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, 80deg);
+            transform: perspective(800px) rotate3d(1, 0, 0, 80deg);
     -webkit-transition-timing-function: ease-in;
             transition-timing-function: ease-in;
     opacity: 0;
   }
-  40% {
-    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, -20deg);
-            transform: perspective(800px) rotate3d(1, 0, 0, -20deg);
+  50% {
+    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, -10deg);
+            transform: perspective(800px) rotate3d(1, 0, 0, -10deg);
     -webkit-transition-timing-function: ease-in;
             transition-timing-function: ease-in;
-  }
-  60% {
-    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, 10deg);
-            transform: perspective(800px) rotate3d(1, 0, 0, 10deg);
-    opacity: 1;
-  }
-  80% {
-    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, -5deg);
-            transform: perspective(800px) rotate3d(1, 0, 0, -5deg);
   }
   100% {
     -webkit-transform: perspective(800px);
@@ -7333,26 +7330,17 @@ footer .thumb-md:hover {
 }
 @keyframes flipInX {
   0% {
-    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, 90deg);
-            transform: perspective(800px) rotate3d(1, 0, 0, 90deg);
+    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, 80deg);
+            transform: perspective(800px) rotate3d(1, 0, 0, 80deg);
     -webkit-transition-timing-function: ease-in;
             transition-timing-function: ease-in;
     opacity: 0;
   }
-  40% {
-    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, -20deg);
-            transform: perspective(800px) rotate3d(1, 0, 0, -20deg);
+  50% {
+    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, -10deg);
+            transform: perspective(800px) rotate3d(1, 0, 0, -10deg);
     -webkit-transition-timing-function: ease-in;
             transition-timing-function: ease-in;
-  }
-  60% {
-    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, 10deg);
-            transform: perspective(800px) rotate3d(1, 0, 0, 10deg);
-    opacity: 1;
-  }
-  80% {
-    -webkit-transform: perspective(800px) rotate3d(1, 0, 0, -5deg);
-            transform: perspective(800px) rotate3d(1, 0, 0, -5deg);
   }
   100% {
     -webkit-transform: perspective(800px);

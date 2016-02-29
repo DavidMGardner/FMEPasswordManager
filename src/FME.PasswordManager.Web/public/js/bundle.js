@@ -581,15 +581,6 @@ var Login = function (_React$Component) {
                                 { className: 'alert alert-warning' },
                                 'Table Component'
                             )
-                        ),
-                        _react2.default.createElement(
-                            _reactRouter.Link,
-                            { to: '/add/' },
-                            _react2.default.createElement(
-                                'div',
-                                { className: 'alert alert-warning' },
-                                'Add Account Component'
-                            )
                         )
                     )
                 ),
