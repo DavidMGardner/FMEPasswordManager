@@ -5,7 +5,7 @@ FMEPasswordManager.Api
 =========================================================
 Step 1:
 ------------------
-var settings = {
+var settings = { <br/>
   "async": true,
   "crossDomain": true,
   "url": "http://localhost/api/management/EncryptMasterKey",
