@@ -1,2 +1,7 @@
 node_modules
 bower_components
+main.css
+bundle.js
+bundle.js.map
+vendor.bundle.js
+vendor.js
