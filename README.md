@@ -6,38 +6,38 @@ FMEPasswordManager.Api
 Step 1:
 ------------------
 var settings = { <br/>
-  "async": true,
-  "crossDomain": true,
-  "url": "http://localhost/api/management/EncryptMasterKey",
-  "method": "GET",
-  "headers": {
-    "content-type": "application/json",
-    "x-masterkey": "Test1234"
-  }
-}
+  "async": true, <br/>
+  "crossDomain": true, <br/>
+  "url": "http://localhost/api/management/EncryptMasterKey", <br/>
+  "method": "GET", <br/>
+  "headers": { <br/>
+    "content-type": "application/json", <br/>
+    "x-masterkey": "Test1234" <br/>
+  } <br/>
+} <br/>
 
-$.ajax(settings).done(function (response) {
-  // encripted key for subsequent calls
-  console.log(response);
-});
+$.ajax(settings).done(function (response) { <br/>
+  // encripted key for subsequent calls <br/>
+  console.log(response); <br/>
+}); <br/>
 
-Step 2:
+Step 2: 
 --------------------
-var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": "http://localhost/api/passwordManager",
-  "method": "GET",
-  "headers": {
-    "content-type": "application/json",
-    "x-key": "JIqogbiWKXH7l8yazdRWCJBNy9p3N11w" // encripted key from response of step 1
-  }
-}
+var settings = { <br/>
+  "async": true, <br/>
+  "crossDomain": true, <br/>
+  "url": "http://localhost/api/passwordManager", <br/>
+  "method": "GET", <br/>
+  "headers": { <br/>
+    "content-type": "application/json", <br/>
+    "x-key": "JIqogbiWKXH7l8yazdRWCJBNy9p3N11w" // encripted key from response of step 1 <br/>
+  } <br/>
+} <br/>
 
-$.ajax(settings).done(function (response) {
-  console.log(response);
-});
-
+$.ajax(settings).done(function (response) { <br/>
+  console.log(response); <br/>
+}); <br/>
+<br/>
 
 FMEPasswordManager.Web Frontend Dev Server and Automation
 =========================================================
