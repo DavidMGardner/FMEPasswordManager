@@ -567,28 +567,32 @@ var Login = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'container' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'alert alert-info' },
-                    'Landing Component'
-                ),
-                _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/table/' },
+                    { className: 'row' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'alert alert-warning' },
-                        'Table Component'
-                    )
-                ),
-                _react2.default.createElement(
-                    _reactRouter.Link,
-                    { to: '/add/' },
+                        { className: 'alert alert-info' },
+                        'Landing Component'
+                    ),
                     _react2.default.createElement(
-                        'div',
-                        { className: 'alert alert-warning' },
-                        'Add Account Component'
+                        _reactRouter.Link,
+                        { to: '/table/' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'alert alert-warning' },
+                            'Table Component'
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/add/' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'alert alert-warning' },
+                            'Add Account Component'
+                        )
                     )
                 )
             );
@@ -613,6 +617,8 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouter = require('react-router');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -633,10 +639,144 @@ var PasswordTable = function (_React$Component) {
     _createClass(PasswordTable, [{
         key: 'render',
         value: function render() {
+            {/*TODO: add state and lifecycle hooks for pulling data from .NET API*/}
             return _react2.default.createElement(
                 'div',
-                { className: 'alert alert-info' },
-                'Table Component'
+                { className: 'container' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'alert alert-info' },
+                        'Table Component'
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'table-responsive' },
+                        _react2.default.createElement(
+                            'table',
+                            { className: 'table table-hover' },
+                            _react2.default.createElement(
+                                'thead',
+                                null,
+                                _react2.default.createElement(
+                                    'tr',
+                                    { className: 'text-center' },
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'Account'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'Password'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'Email'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'Username'
+                                    )
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tbody',
+                                null,
+                                _react2.default.createElement(
+                                    'tr',
+                                    { className: 'text-center' },
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'facebook.com'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'p@ssword1'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'email@gmail.com'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'user1'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'tr',
+                                    { className: 'text-center' },
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'twitter.com'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'password1!'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'email.twitter@gmail.com'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'user2'
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'tr',
+                                    { className: 'text-center' },
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'bank.com'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'p@ssword1'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'email.bank@gmail.com'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        'user3'
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/add/' },
+                        _react2.default.createElement(
+                            'button',
+                            { type: 'submit', className: 'btn btn-primary pull-right' },
+                            'Add Account'
+                        )
+                    )
+                )
             );
         }
     }]);
@@ -646,7 +786,7 @@ var PasswordTable = function (_React$Component) {
 
 exports.default = PasswordTable;
 
-},{"react":"react"}],11:[function(require,module,exports){
+},{"react":"react","react-router":"react-router"}],11:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
