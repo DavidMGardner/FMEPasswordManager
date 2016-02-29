@@ -6,17 +6,15 @@ import FooterActions from '../actions/FooterActions';
 class Footer extends React.Component {
     constructor(props) {
         super(props);
-        this.state = FooterStore.getState();
+        {/*this.state = FooterStore.getState();*/}
         this.onChange = this.onChange.bind(this);
     }
 
     componentDidMount() {
-        FooterStore.listen(this.onChange);
-        FooterActions.getTopCharacters();
     }
 
     componentWillUnmount() {
-        FooterStore.unlisten(this.onChange);
+        {/*FooterStore.unlisten(this.onChange);*/}
     }
 
     onChange(state) {
@@ -24,16 +22,6 @@ class Footer extends React.Component {
     }
 
     render() {
-        let leaderboardCharacters = this.state.characters.map((character) => {
-            return (
-                <li key={character.characterId}>
-                    <Link to={'/characters/' + character.characterId}>
-                        <img className='thumb-md' src={'http://image.eveonline.com/Character/' + character.characterId + '_128.jpg'} />
-                    </Link>
-                </li>
-            )
-        });
-
         return (
             <footer>
                 <div className='container'>
@@ -42,6 +30,7 @@ class Footer extends React.Component {
                             <h3 className='lead'><strong>Password Manager</strong></h3>
                             <p>You may view the <a href='https://github.com/DavidMGardner/FMEPasswordManager'>Source Code</a> behind this project on GitHub.</p>
                             <p>© 2016 Full Metal Engineering</p>
+                            <h4>Brutally Secure</h4>
                         </div>
                     </div>
                 </div>
