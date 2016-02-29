@@ -2,9 +2,8 @@
 {
     public interface IKeyPersistenceStrategy
     {
-        string Key { set; }
-        void SetEncryptKey(string encryptedKey);
-        string EncryptedKey { get; }
-        string DecryptedKey { get; }
+        string AddOrRetrieveMasterKey(string masterKey);
+        string DecryptedMasterKey(string encryptedMaster);
+        string EncryptedMasterKey(string encryptedMaster);
     }
 }

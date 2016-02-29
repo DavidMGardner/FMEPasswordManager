@@ -9,6 +9,14 @@ namespace FME.PasswordManager.Configuration
 {
     public class Configuration : IConfiguration
     {
+        private readonly IKeyPersistenceStrategy _keyPersistenceStrategy;
+        private string _encryptedMasterKey = String.Empty;
+
+        public Configuration(IKeyPersistenceStrategy keyPersistenceStrategy)
+        {
+            _keyPersistenceStrategy = keyPersistenceStrategy;
+        }
+
         public string StorageLocation => ConfigurationManager.AppSettings["StorageLocation"];
         public string EncryptionSalt
         {
@@ -31,17 +39,23 @@ namespace FME.PasswordManager.Configuration
             }
         }
 
-        public string DecryptedMasterKey { get; private set; }
-        public string EncryptedMasterKey { get; private set; }
-        
+        public string DecryptedMasterKey => _keyPersistenceStrategy.DecryptedMasterKey(MasterKey);
+
+        public string EncryptedMasterKey
+        {
+            get
+            {
+                return _keyPersistenceStrategy.EncryptedMasterKey(MasterKey);
+            }
+
+            set { _keyPersistenceStrategy.EncryptedMasterKey(value); }
+        } 
+
         // shared resource
         public string MasterKey
         {
-            set
-            {
-                DecryptedMasterKey = value;
-                EncryptedMasterKey = CipherUtility.Encrypt<TripleDESCryptoServiceProvider>(DecryptedMasterKey, DecryptedMasterKey, EncryptionSalt);
-            }
+            set { _encryptedMasterKey = _keyPersistenceStrategy.AddOrRetrieveMasterKey(value); }
+            get { return _encryptedMasterKey;}
         }
 
         public string GetFullPath()
@@ -63,6 +77,6 @@ namespace FME.PasswordManager.Configuration
 
         string MasterKey { set; }
         string DecryptedMasterKey { get; }
-        string EncryptedMasterKey { get; }
+        string EncryptedMasterKey { get; set; }
     }
 }

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using System.Web.Http;
+using System.Web.Http.Controllers;
+using System.Web.Http.Filters;
 using FME.PasswordManager;
 using FME.PasswordManager.Configuration;
 using FME.PasswordManager.Encryption;
@@ -47,14 +50,41 @@ namespace FMEPasswordManager.Api.App_Start
                 x.For<IEncryptionStrategy>().Use<TripleDESEncryptionStrategy>();
                 x.For<IPasswordManagement>().Use<PasswordManagement>();
                 x.For<ILogger>().Use(log);
-
+                x.For<IFilterProvider>().Use<StructureMapFilterProvider>();
                 x.For<IRepository<PasswordEntity>>().Use<EntityRepository<PasswordEntity>>();
-               
+
+                x.For<IKeyPersistenceStrategy>().Singleton().Use<SynchronizedEncryptedKeyPersistenceStrategy>();
+
+                x.Policies.FillAllPropertiesOfType<IConfiguration>().Singleton().Use<Configuration>();
             });
 
             container.AssertConfigurationIsValid();
+            
 
             return container;
+        }
+    }
+
+    internal class StructureMapFilterProvider : ActionDescriptorFilterProvider, IFilterProvider
+    {
+        private readonly IContainer _container;
+
+        public StructureMapFilterProvider(IContainer container)
+        {
+            _container = container;
+        }
+
+        public new IEnumerable<FilterInfo> GetFilters(HttpConfiguration configuration, HttpActionDescriptor actionDescriptor)
+        {
+            var filters = base.GetFilters(configuration, actionDescriptor);
+
+            var filterInfos = filters as IList<FilterInfo> ?? filters.ToList();
+            foreach (var filter in filterInfos)
+            {
+                _container.BuildUp(filter.Instance);
+            }
+
+            return filterInfos;
         }
     }
 }

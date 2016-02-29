@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using FME.PasswordManager;
+using FME.PasswordManager.Configuration;
 using FME.PasswordManager.Interfaces;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Schema.Generation;
@@ -15,38 +16,35 @@ namespace FMEPasswordManager.Api.Controllers
     public class PasswordManagerSetupController : ApiController
     {
         private readonly IRepository<PasswordEntity> _repository;
-        private readonly IEncryptionStrategy _encryptionStrategy;
+        private readonly IConfiguration _configuration;
 
-        public PasswordManagerSetupController(IRepository<PasswordEntity> repository, IEncryptionStrategy encryptionStrategy)
+        public PasswordManagerSetupController(IRepository<PasswordEntity> repository, IConfiguration configuration)
         {
             _repository = repository;
-            _encryptionStrategy = encryptionStrategy;
+            _configuration = configuration;
         }
 
         [HttpGet]
         [Route("api/PasswordManagerSetup/CreateOrValidateRepository")]
+        [MasterKeyHeaderFilter]
         public string EnsureContainer()
         {
-            this.SetMasterKey((IKey)_repository);
             if (_repository.EnsureRepository())
                 return "Success";
-            else
-            {
-                return "Failure";
-            }
+
+            return "Failure";
         }
 
         [HttpGet]
-        [Route("api/PasswordManagerSetup/EncrptMasterKey")]
-        public string EncrptMasterKey()
+        [Route("api/management/EncryptMasterKey")]
+        public string EncryptMasterKey()
         {
             var header = Request.GetFirstHeaderValueOrDefault<string>("X-MasterKey");
             if (String.IsNullOrWhiteSpace(header))
                 throw new ApiParameterNullException("MasterKey was not been provided via http header");
 
-            this.SetMasterKey((IKey)_repository);
-
-            return _encryptionStrategy.Encrypt(header);
+            _configuration.MasterKey = header;
+            return _configuration.EncryptedMasterKey;
         }
 
         [HttpGet]

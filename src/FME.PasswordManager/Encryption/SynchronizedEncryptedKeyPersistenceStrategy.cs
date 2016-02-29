@@ -1,40 +1,73 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Security.Cryptography;
+using FME.PasswordManager.Configuration;
+using FME.PasswordManager.Exceptions;
 using FME.PasswordManager.Interfaces;
 
 namespace FME.PasswordManager.Encryption
 {
     public class SynchronizedEncryptedKeyPersistenceStrategy : IKeyPersistenceStrategy
     {
-        private readonly string _encryptionSalt;
-        private string _decryptedKey = String.Empty;
-        private string _encryptedKey = String.Empty;
-        private readonly object _lock = new object();
+        private readonly Lazy<IConfiguration> _configuration;
+        private readonly ConcurrentDictionary<string, KeyState> _concurrentState = new ConcurrentDictionary<string, KeyState>();
 
-        public SynchronizedEncryptedKeyPersistenceStrategy(string encryptionSalt)
+        public SynchronizedEncryptedKeyPersistenceStrategy(Lazy<IConfiguration> configuration)
         {
-            _encryptionSalt = encryptionSalt;
+            _configuration = configuration;
         }
 
-        public string EncryptedKey => String.IsNullOrWhiteSpace(_encryptedKey) ? null : _encryptedKey;
-        public string DecryptedKey => String.IsNullOrWhiteSpace(_encryptedKey) ? null : _decryptedKey;
 
-        public void SetEncryptKey(string encryptedKey)
+        public string AddOrRetrieveMasterKey(string masterKey)
         {
-            _encryptedKey = encryptedKey;
-        }
+            var encryptedKey = CipherUtility.Encrypt<TripleDESCryptoServiceProvider>(masterKey, masterKey, _configuration.Value.EncryptionSalt);
 
-        public string Key
-        {
-            set
+            KeyState outKeyState;
+            if (_concurrentState.TryGetValue(encryptedKey, out outKeyState))
             {
-                lock (_lock)
-                {
-                    _decryptedKey = value;
-                    _encryptedKey = CipherUtility.Encrypt<TripleDESCryptoServiceProvider>(_decryptedKey, value, _encryptionSalt);
-                }
+                return outKeyState.EnryptedMasterKey;
             }
+
+            var newKeyState = new KeyState()
+            {
+                DecryptedMasterKey = masterKey,
+                EnryptedMasterKey = encryptedKey
+            };
+
+            if (_concurrentState.TryAdd(encryptedKey, newKeyState))
+            {
+                return newKeyState.EnryptedMasterKey;
+            }
+
+            return String.Empty;
         }
 
+        public string DecryptedMasterKey(string encryptedMaster)
+        {
+            KeyState outKeyState;
+            if (_concurrentState.TryGetValue(encryptedMaster, out outKeyState))
+            {
+                return outKeyState.DecryptedMasterKey;
+            }
+
+            return null;
+        }
+
+        public string EncryptedMasterKey(string encryptedMaster)
+        {
+            KeyState outKeyState;
+            if (_concurrentState.TryGetValue(encryptedMaster, out outKeyState))
+            {
+                return outKeyState.EnryptedMasterKey;
+            }
+
+            throw new EncryptedKeyNotFoundException("EncryptedKey Not Found in Key Store, has your session expired?");
+        }
+
+        internal class KeyState
+        {
+            public string DecryptedMasterKey { get; set; }
+            public string EnryptedMasterKey { get; set; }
+        }
     }
 }
