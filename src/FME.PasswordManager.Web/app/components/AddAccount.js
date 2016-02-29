@@ -61,7 +61,6 @@ class AddAccount extends React.Component {
                 <div className='row flipInX animated'>
                     <div className='col-sm-8'>
                         <div className='panel panel-default'>
-                            <div className='panel-heading'>Add Account</div>
                             <div className='panel-body'>
                                 <form onSubmit={this.handleSubmit.bind(this)}>
 

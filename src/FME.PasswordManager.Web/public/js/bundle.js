@@ -174,11 +174,6 @@ var AddAccount = function (_React$Component) {
                             { className: 'panel panel-default' },
                             _react2.default.createElement(
                                 'div',
-                                { className: 'panel-heading' },
-                                'Add Account'
-                            ),
-                            _react2.default.createElement(
-                                'div',
                                 { className: 'panel-body' },
                                 _react2.default.createElement(
                                     'form',
@@ -567,31 +562,135 @@ var Login = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'div',
-                { className: 'container' },
+                null,
                 _react2.default.createElement(
                     'div',
-                    { className: 'row' },
+                    { className: 'container' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'alert alert-info' },
-                        'Landing Component'
-                    ),
-                    _react2.default.createElement(
-                        _reactRouter.Link,
-                        { to: '/table/' },
+                        { className: 'row' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'alert alert-warning' },
-                            'Table Component'
+                            { className: 'alert alert-info' },
+                            'Landing Component'
+                        ),
+                        _react2.default.createElement(
+                            _reactRouter.Link,
+                            { to: '/table/' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'alert alert-warning' },
+                                'Table Component'
+                            )
+                        ),
+                        _react2.default.createElement(
+                            _reactRouter.Link,
+                            { to: '/add/' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'alert alert-warning' },
+                                'Add Account Component'
+                            )
                         )
-                    ),
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'container' },
                     _react2.default.createElement(
-                        _reactRouter.Link,
-                        { to: '/add/' },
+                        'div',
+                        { className: 'row flipInX animated' },
                         _react2.default.createElement(
                             'div',
-                            { className: 'alert alert-warning' },
-                            'Add Account Component'
+                            { className: 'col-sm-6' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'panel panel-default' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel-body' },
+                                    _react2.default.createElement(
+                                        'form',
+                                        null,
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'form-group ' },
+                                            _react2.default.createElement(
+                                                'label',
+                                                { className: 'control-label' },
+                                                'Email'
+                                            ),
+                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'usernameTextField' })
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'form-group ' },
+                                            _react2.default.createElement(
+                                                'label',
+                                                { className: 'control-label' },
+                                                'Password'
+                                            ),
+                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'passwordTextField' })
+                                        ),
+                                        _react2.default.createElement(
+                                            'button',
+                                            { type: 'submit', className: 'btn btn-primary pull-right' },
+                                            'Login'
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'col-sm-6' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'panel panel-default' },
+                                _react2.default.createElement(
+                                    'div',
+                                    { className: 'panel-body' },
+                                    _react2.default.createElement(
+                                        'form',
+                                        null,
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'form-group ' },
+                                            _react2.default.createElement(
+                                                'label',
+                                                { className: 'control-label' },
+                                                'Email'
+                                            ),
+                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'usernameTextField' })
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'form-group ' },
+                                            _react2.default.createElement(
+                                                'label',
+                                                { className: 'control-label' },
+                                                'Password'
+                                            ),
+                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'passwordTextField' })
+                                        ),
+                                        _react2.default.createElement(
+                                            'div',
+                                            { className: 'form-group ' },
+                                            _react2.default.createElement(
+                                                'label',
+                                                { className: 'control-label' },
+                                                'Confirm Password'
+                                            ),
+                                            _react2.default.createElement('input', { type: 'text', className: 'form-control', ref: 'confirmPasswordTextField' })
+                                        ),
+                                        _react2.default.createElement(
+                                            'button',
+                                            { type: 'submit', className: 'btn btn-primary pull-right' },
+                                            'Register'
+                                        )
+                                    )
+                                )
+                            )
                         )
                     )
                 )
@@ -667,26 +766,44 @@ var PasswordTable = function (_React$Component) {
                                 _react2.default.createElement(
                                     'tr',
                                     { className: 'text-center' },
+                                    _react2.default.createElement('td', null),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        'Account'
+                                        _react2.default.createElement(
+                                            'b',
+                                            null,
+                                            'Account'
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        'Password'
+                                        _react2.default.createElement(
+                                            'b',
+                                            null,
+                                            'Password'
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        'Email'
+                                        _react2.default.createElement(
+                                            'b',
+                                            null,
+                                            'Email'
+                                        )
                                     ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
-                                        'Username'
-                                    )
+                                        _react2.default.createElement(
+                                            'b',
+                                            null,
+                                            'Username'
+                                        )
+                                    ),
+                                    _react2.default.createElement('td', null)
                                 )
                             ),
                             _react2.default.createElement(
@@ -695,6 +812,19 @@ var PasswordTable = function (_React$Component) {
                                 _react2.default.createElement(
                                     'tr',
                                     { className: 'text-center' },
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        _react2.default.createElement(
+                                            _reactRouter.Link,
+                                            { to: '/table/' },
+                                            _react2.default.createElement(
+                                                'button',
+                                                { type: 'submit', className: 'btn btn-warning' },
+                                                'Details'
+                                            )
+                                        )
+                                    ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
@@ -714,11 +844,37 @@ var PasswordTable = function (_React$Component) {
                                         'td',
                                         null,
                                         'user1'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        _react2.default.createElement(
+                                            _reactRouter.Link,
+                                            { to: '/table/' },
+                                            _react2.default.createElement(
+                                                'button',
+                                                { type: 'submit', className: 'btn btn-info' },
+                                                'Edit'
+                                            )
+                                        )
                                     )
                                 ),
                                 _react2.default.createElement(
                                     'tr',
                                     { className: 'text-center' },
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        _react2.default.createElement(
+                                            _reactRouter.Link,
+                                            { to: '/table/' },
+                                            _react2.default.createElement(
+                                                'button',
+                                                { type: 'submit', className: 'btn btn-warning' },
+                                                'Details'
+                                            )
+                                        )
+                                    ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
@@ -738,11 +894,37 @@ var PasswordTable = function (_React$Component) {
                                         'td',
                                         null,
                                         'user2'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        _react2.default.createElement(
+                                            _reactRouter.Link,
+                                            { to: '/table/' },
+                                            _react2.default.createElement(
+                                                'button',
+                                                { type: 'submit', className: 'btn btn-info' },
+                                                'Edit'
+                                            )
+                                        )
                                     )
                                 ),
                                 _react2.default.createElement(
                                     'tr',
                                     { className: 'text-center' },
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        _react2.default.createElement(
+                                            _reactRouter.Link,
+                                            { to: '/table/' },
+                                            _react2.default.createElement(
+                                                'button',
+                                                { type: 'submit', className: 'btn btn-warning' },
+                                                'Details'
+                                            )
+                                        )
+                                    ),
                                     _react2.default.createElement(
                                         'td',
                                         null,
@@ -762,6 +944,19 @@ var PasswordTable = function (_React$Component) {
                                         'td',
                                         null,
                                         'user3'
+                                    ),
+                                    _react2.default.createElement(
+                                        'td',
+                                        null,
+                                        _react2.default.createElement(
+                                            _reactRouter.Link,
+                                            { to: '/table/' },
+                                            _react2.default.createElement(
+                                                'button',
+                                                { type: 'submit', className: 'btn btn-info' },
+                                                'Edit'
+                                            )
+                                        )
                                     )
                                 )
                             )
