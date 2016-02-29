@@ -15,7 +15,7 @@ namespace FMEPasswordManager.Api
             var masterKey = actionContext.Request.GetFirstHeaderValueOrDefault<string>("X-MasterKey");
 
             if (String.IsNullOrWhiteSpace(encryptedMasterKey) && String.IsNullOrWhiteSpace(masterKey))
-                throw new ApiParameterNullException("MasterKey was not been provided via http header");
+                throw new ApiParameterNullException("MasterKey was not provided via http header");
 
             if (!String.IsNullOrWhiteSpace(masterKey))
                 Configuration.MasterKey = masterKey;
