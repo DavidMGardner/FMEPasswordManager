@@ -17,7 +17,7 @@ namespace FME.PasswordManager.Encryption
             if (Configuration == null)
                 throw new EncryptionConfigurationException("Invalid configuration set in TripleDESEncryptionStrategy");
 
-            return CipherUtility.Encrypt<AesCryptoServiceProvider>(value, Configuration.MasterKey, Configuration.EncryptionSalt);
+            return CipherUtility.Encrypt<AesCryptoServiceProvider>(value, Configuration.DecryptedMasterKey, Configuration.EncryptionSalt);
         }
 
         public string Decrypt(string text)
@@ -25,7 +25,7 @@ namespace FME.PasswordManager.Encryption
             if (Configuration == null)
                 throw new EncryptionConfigurationException("Invalid configuration set in TripleDESEncryptionStrategy");
 
-            return CipherUtility.Decrypt<AesCryptoServiceProvider>(text, Configuration.MasterKey, Configuration.EncryptionSalt);
+            return CipherUtility.Decrypt<AesCryptoServiceProvider>(text, Configuration.DecryptedMasterKey, Configuration.EncryptionSalt);
         }
 
         public IConfiguration Configuration { get; set; }

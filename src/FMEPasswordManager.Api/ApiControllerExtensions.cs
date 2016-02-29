@@ -12,11 +12,11 @@ namespace FMEPasswordManager.Api
     {
         public static void SetMasterKey(this ApiController controller, IKey masterKey )
         {
-            var header = controller.Request.GetFirstHeaderValueOrDefault<string>("X-MasterKey");
-            if (String.IsNullOrWhiteSpace(header))
+            var encryptedMasterKey = controller.Request.GetFirstHeaderValueOrDefault<string>("X-MasterKey");
+            if (String.IsNullOrWhiteSpace(encryptedMasterKey))
                 throw new ApiParameterNullException("MasterKey was not been provided via http header");
-
-            masterKey.MasterKey = header;
+            
+            masterKey.MasterKey = encryptedMasterKey;
         }
     }
 }

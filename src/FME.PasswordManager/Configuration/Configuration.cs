@@ -7,11 +7,8 @@ using FME.PasswordManager.Interfaces;
 
 namespace FME.PasswordManager.Configuration
 {
-    public class SynchronizedConfiguration : IConfiguration
+    public class Configuration : IConfiguration
     {
-        private readonly object _lock = new object();
-        private string _masterKey = String.Empty;
-
         public string StorageLocation => ConfigurationManager.AppSettings["StorageLocation"];
         public string EncryptionSalt
         {
@@ -19,28 +16,31 @@ namespace FME.PasswordManager.Configuration
             set { ConfigurationManager.AppSettings["EncryptionSalt"] = value; }
         }
 
+        public string FileExtension => EnvironmentName;
+        public string EnvironmentName => String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Environment"]) ? "Production" : ConfigurationManager.AppSettings["Environment"];
+        
         public string EncriptedFileName 
         {
             get
             {
-                var encryptedFilename = CipherUtility.Encrypt<TripleDESCryptoServiceProvider>(MasterKey, MasterKey, EncryptionSalt);
+                var encryptedFilename = EncryptedMasterKey;
                 var encodedFileName = Convert.ToBase64String(Encoding.UTF8.GetBytes(encryptedFilename));
                 var encodedAndEscapedFilename = encodedFileName.Replace('/', '-');
 
-                return encodedAndEscapedFilename;
+                return $"{encodedAndEscapedFilename}.{FileExtension}";
             }
         }
 
+        public string DecryptedMasterKey { get; private set; }
+        public string EncryptedMasterKey { get; private set; }
+        
         // shared resource
         public string MasterKey
         {
-            get { return _masterKey; }
             set
             {
-                lock (_lock)
-                {
-                    _masterKey = value;
-                }
+                DecryptedMasterKey = value;
+                EncryptedMasterKey = CipherUtility.Encrypt<TripleDESCryptoServiceProvider>(DecryptedMasterKey, DecryptedMasterKey, EncryptionSalt);
             }
         }
 
@@ -58,8 +58,11 @@ namespace FME.PasswordManager.Configuration
     {
         string StorageLocation { get; }
         string EncriptedFileName { get; }
-        string MasterKey { get; set; }
         string EncryptionSalt { get; set; }
         string GetFullPath();
+
+        string MasterKey { set; }
+        string DecryptedMasterKey { get; }
+        string EncryptedMasterKey { get; }
     }
 }
