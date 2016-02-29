@@ -18,7 +18,10 @@ namespace FME.PasswordManager
 
         public string MasterKey
         {
-            set {_configuration.MasterKey = value; } 
+            set
+            {
+                _configuration.MasterKey = value;
+            } 
         }
 
         public EntityRepository(IConfiguration configuration, IEntityPersistence<T> persistence, IPasswordManagement passwordManagement)

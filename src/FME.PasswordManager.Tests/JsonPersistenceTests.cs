@@ -45,7 +45,7 @@ namespace FME.PasswordManager.Tests
                 x.For<IEntityPersistence<PasswordEntity>>().Use<JsonFilePersistence<PasswordEntity>>();
                 x.For<IRepository<PasswordEntity>>().Use<EntityRepository<PasswordEntity>>();
                 
-                x.For<IConfiguration>().Use<SynchronizedConfiguration>();
+                x.For<IConfiguration>().Use<Configuration.Configuration>();
                 x.For<IEncryptionStrategy>().Use<TripleDESEncryptionStrategy>();
                 x.For<ILogger>().Use(log);
             });

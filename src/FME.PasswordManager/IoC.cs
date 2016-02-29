@@ -21,7 +21,7 @@ namespace FME.PasswordManager
         {
             return new Container(x =>
             {
-                x.For<IConfiguration>().Use<SynchronizedConfiguration>();
+                x.For<IConfiguration>().Use<Configuration.Configuration>();
 
                 x.Scan(scan =>
                 {

@@ -15,10 +15,12 @@ namespace FMEPasswordManager.Api.Controllers
     public class PasswordManagerSetupController : ApiController
     {
         private readonly IRepository<PasswordEntity> _repository;
+        private readonly IEncryptionStrategy _encryptionStrategy;
 
-        public PasswordManagerSetupController(IRepository<PasswordEntity> repository)
+        public PasswordManagerSetupController(IRepository<PasswordEntity> repository, IEncryptionStrategy encryptionStrategy)
         {
             _repository = repository;
+            _encryptionStrategy = encryptionStrategy;
         }
 
         [HttpGet]
@@ -32,6 +34,19 @@ namespace FMEPasswordManager.Api.Controllers
             {
                 return "Failure";
             }
+        }
+
+        [HttpGet]
+        [Route("api/PasswordManagerSetup/EncrptMasterKey")]
+        public string EncrptMasterKey()
+        {
+            var header = Request.GetFirstHeaderValueOrDefault<string>("X-MasterKey");
+            if (String.IsNullOrWhiteSpace(header))
+                throw new ApiParameterNullException("MasterKey was not been provided via http header");
+
+            this.SetMasterKey((IKey)_repository);
+
+            return _encryptionStrategy.Encrypt(header);
         }
 
         [HttpGet]

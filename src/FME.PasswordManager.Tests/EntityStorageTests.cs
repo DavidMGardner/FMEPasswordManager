@@ -33,7 +33,7 @@ namespace FME.PasswordManager.Tests
 
             _container.Configure(x =>
             {
-                x.For<IConfiguration>().Use<SynchronizedConfiguration>();
+                x.For<IConfiguration>().Use<Configuration.Configuration>();
 
                 // use the memory persistence purly for testing
                 x.For<IEntityPersistence<PasswordEntity>>().Use<EntityMemoryPersistence<PasswordEntity>>();

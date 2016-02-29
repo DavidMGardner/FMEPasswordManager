@@ -34,7 +34,7 @@ namespace FME.PasswordManager.Tests
 
             _container.Configure(x =>
             {
-                x.For<IConfiguration>().Singleton().Use<SynchronizedConfiguration>();
+                x.For<IConfiguration>().Singleton().Use<Configuration.Configuration>();
                 x.For<IEncryptionStrategy>().Use<TripleDESEncryptionStrategy>();
                 x.For<ILogger>().Use(log);
             });
