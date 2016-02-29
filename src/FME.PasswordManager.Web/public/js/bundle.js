@@ -513,7 +513,11 @@ var Header = function (_React$Component) {
                         _react2.default.createElement(
                             'div',
                             { className: 'pull-left' },
-                            'Full Metal Engineering Password Manager'
+                            _react2.default.createElement(
+                                'h2',
+                                null,
+                                'Full Metal Engineering Password Manager'
+                            )
                         )
                     )
                 )
