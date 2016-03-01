@@ -42,9 +42,12 @@ $.ajax(settings).done(function (response) { <br/>
 FMEPasswordManager.Web Frontend Dev Server and Automation
 =========================================================
 
-$ npm install
-$ gulp
-$ npm run watch
-
-gulp command will bundle vendor files, transpile and bundle jsx files, and compile .less styles
-npm run watch will start node server and watch all jsx, js, html, and style changes and update realtime output with nodemon
+Node is a dependency for this project. Install before use. <br/>
+<br/>
+$ npm install<br/>
+$ gulp<br/>
+$ npm run watch<br/>
+<br/>
+npm install will install all project dependencies<br/>
+gulp command will bundle vendor files, transpile and bundle jsx files, and compile .less styles<br/>
+npm run watch will start node server and watch all jsx, js, html, and style changes and update realtime output with nodemon<br/>
