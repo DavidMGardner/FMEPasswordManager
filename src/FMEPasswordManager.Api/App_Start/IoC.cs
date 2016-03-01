@@ -35,8 +35,7 @@ namespace FMEPasswordManager.Api.App_Start
               .CreateLogger();
 
             var container = new Container();    
-            container.ForObject(log);
-
+            
             container.Configure(x =>
             {
                 x.Scan(scan =>

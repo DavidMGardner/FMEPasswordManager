@@ -9,7 +9,7 @@ namespace FME.PasswordManager.Encryption
     {
         public static string Encrypt<T>(string value, string password, string salt) where T : SymmetricAlgorithm, new()
         {
-            if (String.IsNullOrWhiteSpace(password))
+            if (String.IsNullOrWhiteSpace(password) || String.IsNullOrWhiteSpace(salt))
                 throw new MissingKeyException();
 
             DeriveBytes rgb = new Rfc2898DeriveBytes(password, Encoding.Unicode.GetBytes(salt));
